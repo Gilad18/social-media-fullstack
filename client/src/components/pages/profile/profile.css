@@ -1,0 +1,66 @@
+.profileSec{
+    /* min-width: 60vw; */
+    max-width: 60vw;
+    height: 100vh;
+    margin: auto;
+}
+
+.profileBio{
+    width: 100%;
+    height: 40%;
+    display: flex;
+}
+
+.profileBioImage {
+   width: 40%;
+   height: 100%;
+   border-right: 2px solid black; 
+   padding: 5%;
+}
+.profilePic {
+    width: 20rem ;
+    height: 20rem;
+    background-position: center;
+    background-size: contain;
+    border-radius: 50%;
+    border: 1px blue solid;
+    margin: auto;
+}
+
+.uploadImage {
+    width: 100%;
+    height: 15%;
+    display: flex;
+    margin-top: 2%;
+}
+
+.uploadImage input {
+    width: 65%;
+    height: 100%;
+}
+.uploadImage button {
+    width: 35%;
+    height: 100%;
+}
+.profileBioInfo {
+    width: 60%;
+   height: 100%;
+   padding: 5%;
+}
+
+.profileNewPost {
+    width: 100%;
+    height: 30%;
+    background-color: burlywood;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+}
+textarea {
+    width: 80%;
+    height: 50%;
+    font-size: 20px !important;
+   
+}

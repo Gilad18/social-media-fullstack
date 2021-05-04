@@ -1,0 +1,17 @@
+.header{
+    width: 100vw;
+    height: 8vh;
+    background-color:blue;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.header i::before {
+       color: whitesmoke;
+      
+}
+
+a:hover {
+   opacity:0.8;
+}

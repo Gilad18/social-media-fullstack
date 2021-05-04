@@ -1,0 +1,26 @@
+.landingPage {
+    width: 100vw;
+    height: 100vh;
+    background-color: blue;
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form{
+    width: 20rem;
+    height: 30rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.radioSec{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}

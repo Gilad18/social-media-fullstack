@@ -13,7 +13,7 @@ const createNewUser = async (req, res) => {
     res.status(200).json({ success: "New Account was Succesfully created", token , newUser })
   }
   catch (error) {
-    res.json(error.errors)
+    res.status(400).json(error.errors)
   }
 }
 
