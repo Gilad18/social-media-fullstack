@@ -27,9 +27,9 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cl
   console.log("database connect")
 });
 
-app.get('/', (req, res) => {
-  res.json({ success: 'Social API' })
-})
+// app.get('/', (req, res) => {
+//   res.json({ success: 'Social API' })
+// })
 
 if (process.env.NODE_ENV === 'production') {
   // Exprees will serve up production assets
