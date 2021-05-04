@@ -8,7 +8,7 @@ const app = express();
 const path = require('path');
 // const os = require('os');
 app.use(cors());
-const port = 4500;
+const port = process.env.PORT || 4500 ;
 
 const socialRoute = require('./server/routes/routes')
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -39,6 +39,6 @@ if (process.env.NODE_ENV === 'production') {
       res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
   }
-  app.listen(process.env.PORT || 4500, () => {
+  app.listen(port, () => {
     return console.log(`application start`);
  })
