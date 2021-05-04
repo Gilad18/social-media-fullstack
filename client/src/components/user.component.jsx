@@ -6,7 +6,7 @@ function User() {
   
   return (
     <div className="App">
-         Hello
+         Welcome to KONEKT
     </div>
   );
 }
