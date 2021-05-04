@@ -17,7 +17,7 @@ export default function Profile() {
 
     useEffect(() => {
         const search = async () => {
-            const theUser = await axios.get(`http://localhost:4500/social/api/profile/${userID.id}`)
+            const theUser = await axios.get(`https://social-media-gilad.herokuapp.com/social/api/profile/${userID.id}`)
             console.log(theUser.data)
             setUser(theUser.data)
         }
@@ -36,7 +36,7 @@ export default function Profile() {
         bodyFormData.append('avatar', newImage);
         const newProfilePic = await axios({
             method: 'post',
-            url: `http://localhost:4500/social/api/${userID.id}/uploadpic`,
+            url: `https://social-media-gilad.herokuapp.com/social/api/${userID.id}/uploadpic`,
             data: bodyFormData,
             headers: { "Content-Type": "multipart/form-data" }
         })
@@ -52,7 +52,7 @@ export default function Profile() {
         try {
             const newPost = await axios({
                 method: 'post',
-                url: 'http://localhost:4500/social/api/profile/newpost',
+                url: 'https://social-media-gilad.herokuapp.com/social/api/profile/newpost',
                 data: {
                     author: user.name,
                     content: postText,

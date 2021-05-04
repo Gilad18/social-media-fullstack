@@ -21,7 +21,7 @@ export default function Login() {
             try {
                 const newUser = await axios({
                     method: 'post',
-                    url: 'http://localhost:4500/social/api/signin',
+                    url: 'https://social-media-gilad.herokuapp.com/social/api/signin',
                     data: {
                         name: name,
                         email: email,
@@ -45,7 +45,7 @@ export default function Login() {
         try {
             const user = await axios({
                 method: 'post',
-                url: 'http://localhost:4500/social/api/login',
+                url: 'https://social-media-gilad.herokuapp.com/social/api/login',
                 data: {
                     email: email,
                     password: password
