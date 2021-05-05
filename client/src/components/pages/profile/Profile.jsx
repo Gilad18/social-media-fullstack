@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useParams } from 'react-router'
 import './profile.css'
-import { Button, Form, Icon, Input } from 'semantic-ui-react'
+import { Button, Form, Card} from 'semantic-ui-react'
 
 export default function Profile() {
 
@@ -12,8 +12,8 @@ export default function Profile() {
     const [user, setUser] = useState({})
     const [postText, setPostText] = useState('')
     const [newImage, setNewImage] = useState(null)
-    const [uploadImageSec , setImageSec] = useState(false)
-    const [imageUploadMess , setMessageIMG] = useState('')
+    const [uploadImageSec, setImageSec] = useState(false)
+    const [imageUploadMess, setMessageIMG] = useState('')
 
     useEffect(() => {
         const search = async () => {
@@ -84,27 +84,50 @@ export default function Profile() {
                             src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
                     }
                     {/* <Icon name="camera" color="black"/> */}
-                    <i className="black circular large camera icon" onClick={handleLoadImageSec}></i>
-                   {
-                       uploadImageSec &&
-                   
-                    <div className="uploadImage">
-                        <Form.Input type="file" onChange={(e)=>setNewImage(e.target.files[0])}/>
-                        <Button onClick={uploadImage} content='Upload Image' secondary />
-                    </div>
+                    <i className="black circular small camera icon" onClick={handleLoadImageSec}></i>
+                    {
+                        uploadImageSec &&
+
+                        <div className="uploadImage">
+                            <Form.Input type="file" onChange={(e) => setNewImage(e.target.files[0])} />
+                            <Button onClick={uploadImage} content='Upload' primary />
+                        </div>
                     }
-                    <p style={{textAlign:'left' , fontWeight:'bold', fontSize:'18px' }}>{imageUploadMess}</p>
+                    <p style={{ textAlign: 'left', fontWeight: 'bold', fontSize: '18px' }}>{imageUploadMess}</p>
                 </div>
                 <div className="profileBioInfo">
-                    <h1>{user.name}</h1>
-                    {user.followers && <h4>Followed by {user.followers.length} people</h4>}
+                    <h3>{user.name}</h3>
+                    {user.followers && <h5>Followed by {user.followers.length} people</h5>}
                 </div>
             </div>
             <div className="profileNewPost">
                 <textarea placeholder="What's on your mind honey? Spill it out..." onChange={(e) => setPostText(e.target.value)} />
                 <Button onClick={createNewPost} content='Share Post' primary />
-
+            </div>
+            <div className="meta" style={{textAlign:'center' , color:'white'}}>People You May Know</div>
+            <div className="peopleYouMayKnow">
+               
+                <div className="ui card" style={{maxWidth:'35%' , padding:'1%' ,margin:'0'}}>
+                <div className="image"><img src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg'/></div>
+                 <div className="content">
+                 <div className="header" style={{fontSize:'14px'}}>Matthew</div> 
+                 <div className="extra content" style={{marginBottom:'10%'}}><a><i aria-hidden="true" className="user icon"></i>22</a></div>
+                 <Button secondary>Follow</Button>
+                 </div>
+                </div>
+              
+                <div className="ui card" style={{maxWidth:'35%' , padding:'1%',margin:'0'}}>
+                <div className="image"><img src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg'/></div>
+                 <div className="content">
+                 <div className="header" style={{fontSize:'14px'}}>Matthew</div> 
+                 <div className="extra content" style={{marginBottom:'10%'}}><a><i aria-hidden="true" className="user icon"></i>22</a></div>
+                 <Button secondary>Follow</Button>
+                 </div>
+                </div>
             </div>
         </div>
     )
 }
+
+
+// src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />

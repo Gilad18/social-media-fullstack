@@ -1,10 +1,13 @@
-.header{
+.headerPage{
     width: 100vw;
     height: 8vh;
     background-color:blue;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    /* border-bottom: white 1px solid; */
+    position: fixed;
+    z-index: 20;
 }
 
 .header i::before {
@@ -15,3 +18,12 @@
 a:hover {
    opacity:0.8;
 }
+
+/* .alarm::after{
+    content: '3';
+    color: 'red';
+    width: 0.5rem;
+    height: 0.5rem;
+    z-index: 50;
+    margin-left: 10%;
+} */
