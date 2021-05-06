@@ -1,7 +1,7 @@
 .notificationSec {
     width: 100vw;
     min-height: 5vh;
-    background-color: blue;
+    background-color: #264653;
     color: white;
     position: fixed;
     top: 4.5rem;
@@ -13,7 +13,7 @@
 .peopleYouMayKnowSec {
     width: 100vw;
     height: 40vh;
-    background-color: blue;
+    background-color: #264653;
     padding: 2%;
 }
 

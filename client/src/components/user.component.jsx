@@ -4,6 +4,7 @@ import Header from '../components/pages/header/Header'
 import Login from '../components/pages/login/Login'
 import Feed from '../components/pages/feed/Feed'
 import Profile from '../components/pages/profile/Profile'
+import Friend from '../components/pages/friend/Friend'
 
 
 function User() {
@@ -16,7 +17,7 @@ function User() {
                 <Route path="/user/:id" component={Header}/>
                 <Route path="/user/:id/feed" exact component={Feed}/>
                 <Route path="/user/:id/profile" exact component={Profile}/>
-                {/* <Route path="/user/:id/friends" exact component={Friends}/> */}
+                <Route path="/user/:id/friend" exact component={Friend}/>
             </div>
             </BrowserRouter>
 

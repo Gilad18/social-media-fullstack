@@ -1,0 +1,7 @@
+.friendSec{
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    top: 5rem;
+    background-color: violet;
+}

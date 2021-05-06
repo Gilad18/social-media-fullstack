@@ -17,6 +17,7 @@ export default function Profile() {
     const [newImage, setNewImage] = useState(null)
     const [uploadImageSec, setImageSec] = useState(false)
     const [imageUploadMess, setMessageIMG] = useState('')
+    const [loading , setLoading] = useState(false)
 
     useEffect(() => {
         const search = async () => {
@@ -27,7 +28,6 @@ export default function Profile() {
                     'Authorization':`Bearer ${token}`
                 }
             })
-            console.log(theUser.data)
             setUser(theUser.data)
         }
         search()
@@ -41,6 +41,7 @@ export default function Profile() {
     }
 
     const uploadImage = async () => {
+        setLoading(true)
         let bodyFormData = new FormData();
         bodyFormData.append('avatar', newImage);
         const newProfilePic = await axios({
@@ -51,7 +52,7 @@ export default function Profile() {
         })
         setImageSec(false)
         setMessageIMG(newProfilePic.data.succes)   //change in server for all messages paths
-        console.log(newProfilePic)
+        setLoading(false)
         setTimeout(() => {
             setMessageIMG('')
         }, 2000);
@@ -99,16 +100,20 @@ export default function Profile() {
 
                         <div className="uploadImage">
                             <Form.Input type="file" onChange={(e) => setNewImage(e.target.files[0])} />
-                            <Button onClick={uploadImage} content='Upload' primary />
+                            <button className={`ui basic button  ${ loading ?'loading' : ''} `} 
+                            onClick={uploadImage}>Upload</button>}
                         </div>
                     }
-                    <p style={{ textAlign: 'left', fontWeight: 'bold', fontSize: '18px' }}>{imageUploadMess}</p>
+    
                 </div>
+              
                 <div className="profileBioInfo">
                     <h3>{user.name}</h3>
                     {user.followers && <h5>Followed by {user.followers.length} people</h5>}
+                    {/* <h4>From Tel Aviv</h4> */}
                 </div>
             </div>
+            <p style={{ textAlign: 'center', color:'#f4a261', fontWeight: 'bold', fontSize: '14px' }}>{imageUploadMess}</p>
             <div className="profileNewPost">
                 <textarea placeholder="What's on your mind honey? Spill it out..." onChange={(e) => setPostText(e.target.value)} />
                 <Button onClick={createNewPost} content='Share Post' primary />

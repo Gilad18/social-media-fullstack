@@ -3,10 +3,11 @@ import './utilities.css'
 
 export default function Notification({ notes }) {
 
+
     return (
         <div className="notificationSec">
             <div class="ui feed">
-                {notes.map((item, index) => {
+              {notes.map((item, index) => {
                     return <React.Fragment key={index}>
                         <div class="event">
                             <div class="label">

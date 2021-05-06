@@ -10,7 +10,7 @@ export default function Login() {
 
     const [exist, setExist] = useState(false)
     const [gender, setGender] = useState(null)
-    const [toggleMessage , setToggleMessage] = useState('Already have an account? login')
+    const [toggleMessage , setToggleMessage] = useState(`Already have an account? login  `)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -67,15 +67,16 @@ export default function Login() {
         setExist(!exist)
         setMessage('')
         setPassword('')
-        exist ? setToggleMessage('Alreday have an account? login') : setToggleMessage('New here? Create you account')
+        exist ? setToggleMessage(`Alreday have an account? login ` ) : setToggleMessage(`New here? Create your account `)
     }
 
     return (
         <div className="landingPage">
+            <div className="logoDiv"></div>
             {exist ?
                 <Form>
-                     <div style={{display:'flex' }}>
-                      <p>{toggleMessage}</p><p style={{color:'red'}} onClick={handleClick}>here</p></div>
+                     <div className="toggleMessage">
+                      <p>{toggleMessage}</p><p style={{color:'#e9c46a',fontWeight:'bold',marginRight:'1.5rem'}} onClick={handleClick}> here</p></div>
                     <h2>Log In</h2>
                     <Form.Input
                         icon='mail' iconPosition='left' type="email"
@@ -91,13 +92,13 @@ export default function Login() {
                 </Form>
                 :
                 <Form>
-                    <div style={{display:'flex' }}>
-                        <p>{toggleMessage}</p><p style={{color:'red'}} onClick={handleClick}>here</p></div>
-                    <h2>Create Your Account</h2>
+                    <div className="toggleMessage">
+                        <p>{toggleMessage}</p><p style={{color:'#e9c46a' , fontWeight:'bold'}} onClick={handleClick}> here</p></div>
+                    <h2>New Account</h2>
                     <div className="radioSec">
                         <Form.Field>
                             <Radio
-                                label='Male' name='gender'
+                                label='Male' name='gender' color='orange'
                                 onChange={(e) => setGender(e.target.value)} />
                         </Form.Field>
                         <Form.Field>

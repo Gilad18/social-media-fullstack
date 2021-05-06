@@ -1,13 +1,30 @@
 .landingPage {
     width: 100vw;
     height: 100vh;
-    background-color: blue;
+    background-color: #1d3557;
     color: white;
     text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+}
+
+.logoDiv {
+    width: 10rem;
+    height: 10rem;
+    background-color: transparent;
+    background-image: url('../../utilities/21c43805123f40d8a8270573dc3f7ee5.png');
+    background-size: contain;
+    position: relative;
+    top: 5rem;
+}
+
+.toggleMessage {
+    display: flex;
+    text-align: center;
+    justify-content: space-evenly;
+    width: 80vw;
 }
 
 form{
@@ -24,3 +41,7 @@ form{
     display: flex;
     justify-content: space-evenly;
 }
+
+/* button {
+    background-color: #2a9d8f !important;
+} */

@@ -75,7 +75,7 @@ textarea::placeholder {
     text-align: center;
     align-items: center;
     justify-content: center;
-    background-color: blue;
+    background-color: #2a9d8f;
 }
 
 .comment button i {

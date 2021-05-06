@@ -17,7 +17,7 @@ export default function Header() {
         const search = async () => {
            const getNotes = await axios({
                method : 'get',
-               url : 'https://social-media-gilad.herokuapp.com/getnotes',   
+               url : 'https://social-media-gilad.herokuapp.com/social/api/getnotes',   
                headers : {
                 'Authorization':`Bearer ${token}`
             }
@@ -31,7 +31,7 @@ export default function Header() {
         setPopUp(!popup)
         const clear = await axios({
             method:'put',
-            url : 'https://social-media-gilad.herokuapp.com/clearNotification',
+            url : 'https://social-media-gilad.herokuapp.com/social/api/clearNotification',
             headers : {
                 'Authorization':`Bearer ${token}`
             }
@@ -43,7 +43,8 @@ export default function Header() {
             <Link to={`/user/${id.id}/profile`}><Icon size='big'  name='user'/></Link>
             <Link to={`/user/${id.id}/feed`}><Icon size='big' name='newspaper'/></Link>
             <Link to={`/user/${id.id}/explore`}><Icon size='big' name='feed'/></Link>
-            <i className={`big  alarm icon ${ notification.length>0 && popup ?'red' : ''}`} onClick={handlePop}></i>
+            <i className='big  search icon'></i>
+            <i className={`big  alarm icon ${ notification.length > 0  ?'red' : 'black'}`} onClick={handlePop}></i>
             {popup && <Notification notes={notification}/> }
         </div>
     )
