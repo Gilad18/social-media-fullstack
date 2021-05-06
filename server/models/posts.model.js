@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 
 const postSchema = mongoose.Schema({
-    authorID: {
+    author: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         unique: false,

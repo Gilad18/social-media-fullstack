@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import './login.css'
-import { Input, Icon, Button, Form, Radio } from 'semantic-ui-react';
+import {  Image, Button, Form, Radio } from 'semantic-ui-react';
 
 export default function Login() {
 
@@ -10,6 +10,7 @@ export default function Login() {
 
     const [exist, setExist] = useState(false)
     const [gender, setGender] = useState(null)
+    const [toggleMessage , setToggleMessage] = useState('Already have an account? login')
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -21,14 +22,14 @@ export default function Login() {
             try {
                 const newUser = await axios({
                     method: 'post',
-                    url: 'https://social-media-gilad.herokuapp.com/social/api/signin',
+                    url: 'https://social-media-gilad.herokuapp.com/signin',
                     data: {
-                        name: name,
+                        name : name,
                         email: email,
                         password: password
                     }
                 })
-                setMessage(newUser.data.success)
+                setMessage(newUser.data.msg)
                 console.log(newUser)
                 localStorage.setItem('token', newUser.data.token)
                 setTimeout(() => {
@@ -45,13 +46,13 @@ export default function Login() {
         try {
             const user = await axios({
                 method: 'post',
-                url: 'https://social-media-gilad.herokuapp.com/social/api/login',
+                url: 'https://social-media-gilad.herokuapp.com/login',
                 data: {
                     email: email,
                     password: password
                 }
             })
-            setMessage(user.data.success)
+            setMessage(user.data.msg)
             localStorage.setItem('token', user.data.token)
             setTimeout(() => {
                 history.push(`/user/${user.data.user._id}/profile`)
@@ -67,13 +68,16 @@ export default function Login() {
         setExist(!exist)
         setMessage('')
         setPassword('')
+        exist ? setToggleMessage('Alreday have an account? login') : setToggleMessage('New here? Create you account')
     }
 
     return (
         <div className="landingPage">
-            <p onClick={handleClick}>CHANGE</p>
+               {/* <Image src='' size='small' /> */}
             {exist ?
                 <Form>
+                     <div style={{display:'flex' }}>
+                      <p>{toggleMessage}</p><p style={{color:'red'}} onClick={handleClick}>here</p></div>
                     <h2>Log In</h2>
                     <Form.Input
                         icon='mail' iconPosition='left' type="email"
@@ -89,6 +93,8 @@ export default function Login() {
                 </Form>
                 :
                 <Form>
+                    <div style={{display:'flex' }}>
+                        <p>{toggleMessage}</p><p style={{color:'red'}} onClick={handleClick}>here</p></div>
                     <h2>Create Your Account</h2>
                     <div className="radioSec">
                         <Form.Field>
@@ -112,7 +118,7 @@ export default function Login() {
                             icon='user' iconPosition='left'
                             placeholder='Full Name' type="text"
                             onChange={(e) => setName(e.target.value)} />
-                    </Form.Field>
+                    </Form.Field> 
                     <Form.Field>
                         <Form.Input
                             icon='mail' iconPosition='left'

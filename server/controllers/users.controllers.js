@@ -3,17 +3,18 @@ const users = require('../models/users.model')
 const createNewUser = async (req, res) => {
   const { name, email, password } = req.body
   const newUser = new users({
-    name: name,
+    name : name ,
     email: email,
     password: password
   })
   try {
     const token = await newUser.generateToken()
+    // await newUser.update( { $push: { notification: `Hey ${newUser.first} Welcome to social club`}})
     await newUser.save()
-    res.status(200).json({ success: "New Account was Succesfully created", token , newUser })
+    res.status(200).json({ msg: "New Account was Succesfully created", token , newUser })
   }
   catch (error) {
-    res.status(400).json(error.errors)
+    res.status(400).json({msg: 'Ivnalid' , error} )
   }
 }
 

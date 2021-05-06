@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const validator = require('validator')
+const validator = require('validator');
+// const { type } = require('os');
 
 const userSchema = mongoose.Schema({
-    name : {
+       name : {
         type : String,
         required : true,
         unique: false,
@@ -55,7 +56,8 @@ const userSchema = mongoose.Schema({
             type: String,
             required: true
         }
-    }]
+    }],
+    notification : [String]
 })
 
 userSchema.methods.generateToken = async function () {

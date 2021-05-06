@@ -66,7 +66,7 @@ export default function Post({ post }) {
                     <div class="comment">
                         <div class="avatar"><img  src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg'/></div>
                         <div class="content">
-                            <textarea style={{height:'5vh', width:'80vw'}} placeholder="Write comment..."/>
+                            <textarea style={{height:'5vh', width:'80vw' , backgroundColor:'#A9A9A9' , border: 'none', color:'white'}} placeholder="Write comment..."/>
                             </div>
                             </div>
                             </div>

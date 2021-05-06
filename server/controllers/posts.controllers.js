@@ -2,10 +2,10 @@ const posts = require('../models/posts.model')
 
 
 const newPost = async (req, res) => {
-  const { content, authorID } = req.body
+  const { content, author } = req.body
   const newPost = new posts({
     content: content,
-    authorID: authorID
+    author: author
   })
   try {
     await newPost.save()
@@ -18,7 +18,7 @@ const newPost = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
-    const allPosts = await posts.find({}).populate({ path: 'authorID', select: ['name', 'avatar'] })
+    const allPosts = await posts.find({}).populate({ path: 'author', select: ['name', 'avatar'] })
       .populate({ path: 'likes', select: ['name', 'avatar'] })
       .populate({ path: 'comments.commenter', select: ['name', 'avatar'] })
       .exec(function (err, docs) {
@@ -35,8 +35,7 @@ const getAllPosts = async (req, res) => {
 const getPostByID = async (req, res) => {
   const postid = req.params.id
   try {
-    const post = await posts.findOne({ _id: postid })
-    await post.populate('authorID')
+    const post = await posts.findOne({ _id: postid }).populate({ path: 'author', select: ['name', 'avatar'] })
     res.status(200).json(post)
   }
   catch (err) {

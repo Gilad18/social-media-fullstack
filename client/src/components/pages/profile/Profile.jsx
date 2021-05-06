@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useParams } from 'react-router'
 import './profile.css'
-import { Button, Form, Card} from 'semantic-ui-react'
+import { Button, Form} from 'semantic-ui-react'
 
 export default function Profile() {
 
@@ -17,7 +17,7 @@ export default function Profile() {
 
     useEffect(() => {
         const search = async () => {
-            const theUser = await axios.get(`https://social-media-gilad.herokuapp.com/social/api/profile/${userID.id}`)
+            const theUser = await axios.get(`https://social-media-gilad.herokuapp.com/profile/${userID.id}`)
             console.log(theUser.data)
             setUser(theUser.data)
         }
@@ -56,7 +56,7 @@ export default function Profile() {
                 data: {
                     author: user.name,
                     content: postText,
-                    authorID: userID.id
+                    author: userID.id
                 }
             })
             setTimeout(() => {
@@ -77,7 +77,7 @@ export default function Profile() {
             <div className="profileBio">
                 <div className="profileBioImage">
                     {user.avatar ?
-                        <img className="profilePic" alt={`${user.nmae}'s profile picture`}
+                        <img className="profilePic" alt={`${user.name}'s profile picture`}
                             src={`data:image/jpg;base64,${arrayBufferToBase64(user.avatar.data)}`} />
                         :
                         <img className="profilePic" alt="Empty User Pic"

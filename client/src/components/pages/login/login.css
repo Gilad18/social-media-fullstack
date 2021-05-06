@@ -11,8 +11,8 @@
 }
 
 form{
-    width: 20rem;
-    height: 30rem;
+    width: 80vw;
+    height: 60vh;
     margin: auto;
     display: flex;
     flex-direction: column;
