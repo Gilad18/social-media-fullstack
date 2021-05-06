@@ -4,8 +4,11 @@ import { useHistory } from 'react-router-dom'
 import { useParams } from 'react-router'
 import './profile.css'
 import { Button, Form} from 'semantic-ui-react'
+import MayKnow from '../../utilities/MayKnow'
 
 export default function Profile() {
+
+    const token = localStorage.getItem('token')
 
     const history = useHistory();
     const userID = useParams()
@@ -17,7 +20,13 @@ export default function Profile() {
 
     useEffect(() => {
         const search = async () => {
-            const theUser = await axios.get(`https://social-media-gilad.herokuapp.com/profile/${userID.id}`)
+            const theUser = await axios({
+                method : 'get',
+                url : `https://social-media-gilad.herokuapp.com/social/api/profile/${userID.id}`,
+                headers : {
+                    'Authorization':`Bearer ${token}`
+                }
+            })
             console.log(theUser.data)
             setUser(theUser.data)
         }
@@ -55,11 +64,14 @@ export default function Profile() {
                 url: 'https://social-media-gilad.herokuapp.com/social/api/profile/newpost',
                 data: {
                     content: postText
+                },
+                headers : {
+                    'Authorization':`Bearer ${token}`
                 }
             })
             setTimeout(() => {
                 history.push(`/user/${userID.id}/feed`)
-            }, 1000);
+            }, 1500);
         }
         catch (err) {
             console.log(err)
@@ -81,7 +93,6 @@ export default function Profile() {
                         <img className="profilePic" alt="Empty User Pic"
                             src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
                     }
-                    {/* <Icon name="camera" color="black"/> */}
                     <i className="black circular small camera icon" onClick={handleLoadImageSec}></i>
                     {
                         uploadImageSec &&
@@ -102,27 +113,7 @@ export default function Profile() {
                 <textarea placeholder="What's on your mind honey? Spill it out..." onChange={(e) => setPostText(e.target.value)} />
                 <Button onClick={createNewPost} content='Share Post' primary />
             </div>
-            <div className="meta" style={{textAlign:'center' , color:'white'}}>People You May Know</div>
-            <div className="peopleYouMayKnow">
-               
-                <div className="ui card" style={{maxWidth:'35%' , padding:'1%' ,margin:'0'}}>
-                <div className="image"><img src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg'/></div>
-                 <div className="content">
-                 <div className="header" style={{fontSize:'14px'}}>Matthew</div> 
-                 <div className="extra content" style={{marginBottom:'10%'}}><a><i aria-hidden="true" className="user icon"></i>22</a></div>
-                 <Button secondary>Follow</Button>
-                 </div>
-                </div>
-              
-                <div className="ui card" style={{maxWidth:'35%' , padding:'1%',margin:'0'}}>
-                <div className="image"><img src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg'/></div>
-                 <div className="content">
-                 <div className="header" style={{fontSize:'14px'}}>Matthew</div> 
-                 <div className="extra content" style={{marginBottom:'10%'}}><a><i aria-hidden="true" className="user icon"></i>22</a></div>
-                 <Button secondary>Follow</Button>
-                 </div>
-                </div>
-            </div>
+            <MayKnow/>
         </div>
     )
 }

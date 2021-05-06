@@ -28,6 +28,8 @@ usersControllers.loginUser(req,res)
     postsControllers.getAllPosts(req,res)
 }).put('/clearNotification', auth , (req,res) => {
     usersControllers.clearNotification(req,res)
+}).get('/getnotes' , auth , (req,res ) => {
+    usersControllers.getNotificiation(req,res)
 })
 
 

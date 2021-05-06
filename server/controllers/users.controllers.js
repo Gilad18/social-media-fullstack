@@ -85,6 +85,11 @@ const follow = async (req, res) => {                     //is there a nicer way 
   // return res.json({error : 'self-follow?! seriously?'})
 }
 
+const getNotificiation =  (req ,res) => {
+  const notes = req.user.notification
+  return res.json(notes)
+}
+
 const clearNotification = async (req,res) => {
     await req.user.updateOne({ $set : {'notification': [] }} , {multi:true})
     return res.status(200).json({msg : 'Clear Notification'})
@@ -97,5 +102,6 @@ module.exports = {
   getAllUsers,
   getUserByID,
   follow,
-  clearNotification
+  clearNotification,
+  getNotificiation
 }

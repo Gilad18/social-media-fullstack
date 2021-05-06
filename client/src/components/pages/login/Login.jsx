@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import './login.css'
-import {  Image, Button, Form, Radio } from 'semantic-ui-react';
+import { Button, Form, Radio } from 'semantic-ui-react';
 
 export default function Login() {
 
@@ -22,7 +22,7 @@ export default function Login() {
             try {
                 const newUser = await axios({
                     method: 'post',
-                    url: 'https://social-media-gilad.herokuapp.com/signin',
+                    url: 'https://social-media-gilad.herokuapp.com/social/api/signin',
                     data: {
                         name : name,
                         email: email,
@@ -30,7 +30,6 @@ export default function Login() {
                     }
                 })
                 setMessage(newUser.data.msg)
-                console.log(newUser)
                 localStorage.setItem('token', newUser.data.token)
                 setTimeout(() => {
                     history.push(`/user/${newUser.data.newUser._id}/profile`)
@@ -46,7 +45,7 @@ export default function Login() {
         try {
             const user = await axios({
                 method: 'post',
-                url: 'https://social-media-gilad.herokuapp.com/login',
+                url: 'https://social-media-gilad.herokuapp.com/social/api/login',
                 data: {
                     email: email,
                     password: password
@@ -73,7 +72,6 @@ export default function Login() {
 
     return (
         <div className="landingPage">
-               {/* <Image src='' size='small' /> */}
             {exist ?
                 <Form>
                      <div style={{display:'flex' }}>

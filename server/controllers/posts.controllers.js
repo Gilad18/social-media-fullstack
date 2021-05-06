@@ -17,9 +17,9 @@ const newPost = async (req, res) => {
   }
 }
 
-const getAllPosts = async (req, res) => {
+const getAllPosts =  (req, res) => {
   try {
-    const allPosts = await posts.find({}).populate({ path: 'author', select: ['name', 'avatar'] })
+    const allPosts =  posts.find({}).populate({ path: 'author', select: ['name', 'avatar'] })
       .populate({ path: 'likes', select: ['name', 'avatar'] })
       .populate({ path: 'comments.commenter', select: ['name', 'avatar'] })
       .exec(function (err, docs) {

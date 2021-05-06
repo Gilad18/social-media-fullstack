@@ -49,7 +49,7 @@ const userSchema = mongoose.Schema({
     avatar : {
         type : Buffer
     },
-    following :[{type : mongoose.Schema.Types.ObjectId,ref : 'users'}]
+     following :[{type : mongoose.Schema.Types.ObjectId,ref : 'users'}]
     ,followers :[{type : mongoose.Schema.Types.ObjectId,ref : 'users'}]
     ,tokens :[{
         token : {

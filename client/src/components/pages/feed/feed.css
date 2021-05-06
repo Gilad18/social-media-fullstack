@@ -40,7 +40,44 @@
     height: 30vh;
     background-color: teal;
 }
+
+ .singlePost .writeComment .ui .comment {
+     display: flex;
+     justify-content: stretch;
+     align-items: center;
+     text-align: center;
+     height: 5vh;
+ }
+
+
+.comment textarea {
+   width : 73vw;
+   height: 100%;
+   background-color: #A9A9A9;
+   border : none ;
+   color: white;
+   border-top-left-radius : 10px;
+   border-bottom-left-radius : 10px;
+   padding: 2%;
+   margin-left: 0;
+}
 textarea::placeholder {
-    color: white; 
-    
+    color: white;  
+}
+
+.comment button {
+    height: 100%;
+    border-top-right-radius : 10px;
+    border-bottom-right-radius : 10px;
+    border: none;
+    width: 12vw;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: blue;
+}
+
+.comment button i {
+    color: white;
 }

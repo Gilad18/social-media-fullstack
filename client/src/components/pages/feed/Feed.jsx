@@ -1,6 +1,7 @@
 import React, { useState ,useEffect } from 'react'
 import axios from 'axios'
 import Post from './Post'
+import MayKnow from '../../utilities/MayKnow'
 import './feed.css'
 
 export default function Feed() {
@@ -9,9 +10,8 @@ export default function Feed() {
 
     useEffect(() => {
         const search = async () => {
-            console.log('hey')
             const allPost = await axios.get(`https://social-media-gilad.herokuapp.com/social/api/posts`)
-            // console.log(allPost.data)
+            console.log(allPost.data)
             setPost(allPost.data)
         }
         search()
@@ -22,6 +22,7 @@ export default function Feed() {
             {posts.map((item,index)=> {
               return  <Post post={item} key={index}/>
             })}
+            <MayKnow/>
         </div>
     )
 }

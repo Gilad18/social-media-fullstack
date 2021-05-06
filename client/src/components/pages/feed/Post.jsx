@@ -1,8 +1,13 @@
-import React from 'react'
-import { Button, Header, Image, Comment } from 'semantic-ui-react'
+import axios from 'axios'
+import React, { useState } from 'react'
+import { Button, Header, Image, Comment , Icon } from 'semantic-ui-react'
 import './feed.css'
 
 export default function Post({ post }) {
+
+    const token = localStorage.getItem('token')
+    const [aPost , setPost] = useState(post)
+    const [newCommentext , setNewCommentex] = useState('')
 
     const timePassed = (date) => {
         const now = new Date()
@@ -42,12 +47,34 @@ export default function Post({ post }) {
         }
         return `${then.getDate()}-${then.getMonth() + 1}-${then.getFullYear()}`
     }
+    const likePost = async () => {
+       const like = await axios({
+            method : 'put',
+            url : `https://social-media-gilad.herokuapp.com/social/api/${aPost._id}/like`,
+            headers : {
+                'Authorization':`Bearer ${token}`
+            }
+        })
+    }
+
+    const comment = async () => {
+        const comment = await axios({
+            method : 'put',
+            url : `https://social-media-gilad.herokuapp.com/social/api/${aPost._id}/comment`,
+            data : {
+                content : newCommentext
+            },
+            headers : {
+                'Authorization':`Bearer ${token}`
+            }
+        })
+    }
     return (
         <div className="singlePost">
             <Header as='h4'>
-                <Image circular src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
+                <Image circular size='big' src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
                 <Header.Content>
-                    {post.authorID.name}
+                    {post.author.name}
                     <Header.Subheader>{timePassed(post.date)}</Header.Subheader>
                 </Header.Content>
             </Header>
@@ -59,15 +86,14 @@ export default function Post({ post }) {
 
                 </div>
             }
-            <Button as='div' color='blue' icon="heart"
+            <Button as='div' color='blue' icon="heart" onClick={likePost}
                 label={{ as: 'a', color: 'blue', pointing: 'left', content: `${post.likes.length}` }} />
                 <div className="writeComment">
-                <div class="ui comments">
-                    <div class="comment">
-                        <div class="avatar"><img  src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg'/></div>
-                        <div class="content">
-                            <textarea style={{height:'5vh', width:'80vw' , backgroundColor:'#A9A9A9' , border: 'none', color:'white'}} placeholder="Write comment..."/>
-                            </div>
+                <div className="ui comments">
+                    <div className="comment">
+                        <div className="avatar "><img  src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg'/></div>
+                            <textarea onChange={(e)=>setNewCommentex(e.target.value)} placeholder="write comment..."/>
+                             <button onClick={comment}><Icon name='comment' /></button>
                             </div>
                             </div>
                 </div>

@@ -5,7 +5,11 @@
     /* height: 100vh; */
     position: relative;
     top: 5rem;
-    background-color: blue;
+    /* background-color: blue; */
+}
+
+input:focus , textarea:focus, button:focus {
+    outline: none;
 }
 
 .profileBio{
@@ -65,22 +69,13 @@
     text-align: center;
     background-color: white;
 }
-textarea {
+.profileNewPost textarea {
     width: 90%;
     height: 50%;
     font-size: 16px !important;
     border-radius: 10px;
     padding: 2%;
+    background-color: rgb(97, 94, 94);
+    color: white;
 }
 
-.peopleYouMayKnow {
-    width: 100%;
-    height: 40vh;
-    background-color: blue;
-    /* padding: 1%; */
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    text-align: center;
-    box-sizing: border-box;
-}

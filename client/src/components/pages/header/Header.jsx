@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import {Link } from 'react-router-dom'
 import { Icon } from 'semantic-ui-react'
@@ -8,11 +9,33 @@ import './header.css'
 export default function Header() {
     const id = useParams()
     const [popup , setPopUp] = useState(false)
-    const [notes , setNotes] = useState(true)      //should be true or false base on notification array length
+    const [notification , setNotification] = useState([])
 
-    const handlePop = () => {
+    const token = localStorage.getItem('token')
+
+    useEffect(() => {
+        const search = async () => {
+           const getNotes = await axios({
+               method : 'get',
+               url : 'https://social-media-gilad.herokuapp.com/getnotes',   
+               headers : {
+                'Authorization':`Bearer ${token}`
+            }
+           })
+           setNotification(getNotes.data)
+        }
+        search()
+    }, [])
+
+    const handlePop = async ()  => {
         setPopUp(!popup)
-        setNotes(false)
+        const clear = await axios({
+            method:'put',
+            url : 'https://social-media-gilad.herokuapp.com/clearNotification',
+            headers : {
+                'Authorization':`Bearer ${token}`
+            }
+        })
     }
 
     return (
@@ -20,14 +43,8 @@ export default function Header() {
             <Link to={`/user/${id.id}/profile`}><Icon size='big'  name='user'/></Link>
             <Link to={`/user/${id.id}/feed`}><Icon size='big' name='newspaper'/></Link>
             <Link to={`/user/${id.id}/explore`}><Icon size='big' name='feed'/></Link>
-            <i className={`big  alarm icon ${ notes ?'red' : ''}`} onClick={handlePop}></i>
-            
-            { popup &&
-            <React.Fragment>
-                <Notification/>
-                {/* <i className="big grey close icon" onClick={handlePop} style={{position:'absolute' , right:'0' , zIndex:'30'}}></i> */}
-                </React.Fragment>
-            }
+            <i className={`big  alarm icon ${ notification.length>0 && popup ?'red' : ''}`} onClick={handlePop}></i>
+            {popup && <Notification notes={notification}/> }
         </div>
     )
 }
