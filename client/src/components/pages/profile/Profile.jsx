@@ -101,7 +101,7 @@ export default function Profile() {
                         <div className="uploadImage">
                             <Form.Input type="file" onChange={(e) => setNewImage(e.target.files[0])} />
                             <button className={`ui basic button  ${ loading ?'loading' : ''} `} 
-                            onClick={uploadImage}>Upload</button>}
+                            onClick={uploadImage}>Upload</button>
                         </div>
                     }
     
