@@ -10,22 +10,24 @@ router.post('/signin' , (req,res) => {
     usersControllers.createNewUser(req,res)
 }).post('/login' , (req,res)=> {
 usersControllers.loginUser(req,res)
-}).post('/profile/newpost' , (req,res) => {
+}).post('/profile/newpost' , auth ,(req,res) => {
     postsControllers.newPost(req,res)
-}).get('/users', auth , (req,res)=> {
+}).get('/users' , (req,res)=> {
     usersControllers.getAllUsers(req,res)
 }).get('/post/:id' , (req,res)=> {
     postsControllers.getPostByID(req,res)
 }).get('/profile/:id' , (req,res)=> {
     usersControllers.getUserByID(req,res)                 
-}).put('/:id/:post/like' , (req,res) => {
+}).put('/:post/like' , auth , (req,res) => {
     postsControllers.likePost(req,res)
-}).put('/:id/:post/comment' , (req,res)=> {
+}).put('/:post/comment' , auth,(req,res)=> {
     postsControllers.newComment(req,res)
-}).put('/:follower/:following/follow' , (req,res) => {
+}).put('/:id/follow' ,auth , (req,res) => {
     usersControllers.follow(req,res)
 }).get('/posts' , (req,res) => {
     postsControllers.getAllPosts(req,res)
+}).put('/clearNotification', auth , (req,res) => {
+    usersControllers.clearNotification(req,res)
 })
 
 

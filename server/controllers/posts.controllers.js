@@ -1,11 +1,12 @@
 const posts = require('../models/posts.model')
+const users = require('../models/users.model')
 
 
 const newPost = async (req, res) => {
-  const { content, author } = req.body
+  const { content} = req.body
   const newPost = new posts({
     content: content,
-    author: author
+    author: req.user.id
   })
   try {
     await newPost.save()
@@ -44,17 +45,20 @@ const getPostByID = async (req, res) => {
 }
 
 const likePost = async (req, res) => {
-  const liker = req.params.id
+  const liker = req.user
   const post = req.params.post
   try {
-    const didLike = await posts.findOne({ _id: post }).findOne({ likes: { $in: liker } })
+    const didLike = await posts.findOne({ _id: post }).findOne({ likes: { $in: liker.id } })
     if (didLike) {
-      const unlike = await posts.updateOne({ _id: post }, { $pull: { likes: liker } })
+      const unlike = await posts.updateOne({ _id: post }, { $pull: { likes: liker.id } })
       await unlike.save()
       return res.json({ success: `unlike` })
     } else {
-      const like = await posts.updateOne({ _id: post }, { $push: { likes: liker } })
+      const like = await posts.updateOne({ _id: post }, { $push: { likes: liker.id } })
+      const postOwner = await posts.findOne({_id : post})
+      const notify = await users.findOneAndUpdate({_id : postOwner.author} , {$push : { notification : `${liker.name} liked your post `}}) 
       await like.save()
+      await notify.save()
       return res.json({ success: `new like` })
     }
 
@@ -65,12 +69,15 @@ const likePost = async (req, res) => {
 }
 const newComment = async (req, res) => {
   const post = req.params.post
-  const commenter = req.params.id
+  const commenter = req.user
   const { content } = req.body
   try {
-    const comment = await posts.updateOne({ _id: post }, { $push: { comments: { commenter: commenter, content: content } } })
-    await comment.save()
-    res.json({ success: `new comment` })
+    await posts.updateOne({ _id: post },{ $push: { comments: { commenter: commenter.id, content: content }}})
+    .populate({ path: 'commenter', select: ['name', 'avatar']})
+    const postOwner = await posts.findOne({_id : post})
+    const notify = await users.findOneAndUpdate({_id : postOwner.author} , {$push : { notification : `${commenter.name} has commemted your post `}}) 
+    await notify.save()
+    return res.status(200).json({ success: `new comment`})
   }
   catch (err) {
     res.send(err)

@@ -54,9 +54,7 @@ export default function Profile() {
                 method: 'post',
                 url: 'https://social-media-gilad.herokuapp.com/social/api/profile/newpost',
                 data: {
-                    author: user.name,
-                    content: postText,
-                    author: userID.id
+                    content: postText
                 }
             })
             setTimeout(() => {

@@ -5,16 +5,16 @@ const createNewUser = async (req, res) => {
   const newUser = new users({
     name : name ,
     email: email,
-    password: password
+    password: password,
+    notification : [`Hey ${name.split(' ')[0]}, welcome to social club`]   // see how you add to default in schema
   })
   try {
     const token = await newUser.generateToken()
-    // await newUser.update( { $push: { notification: `Hey ${newUser.first} Welcome to social club`}})
     await newUser.save()
     res.status(200).json({ msg: "New Account was Succesfully created", token , newUser })
   }
   catch (error) {
-    res.status(400).json({msg: 'Ivnalid' , error} )
+    res.status(400).json({error} )
   }
 }
 
@@ -57,20 +57,22 @@ const getUserByID = async (req, res) => {
 }
 
 const follow = async (req, res) => {                     //is there a nicer way to write it?
-  const follower = req.params.follower
-  const beingFollow = req.params.following
+  const follower = req.user
+  const beingFollow = req.params.id
   
     try {
-      const alredayFollowing = await users.findOne({ _id: follower }).findOne({ following: { $in: beingFollow } })
+      const alredayFollowing = await users.findOne({ _id: follower.id }).findOne({ following: { $in: beingFollow } })
       if (!alredayFollowing) {
-        const followUser = await users.updateOne({ _id: follower }, { $push: { following: beingFollow } })
-        const followingUser = await users.updateOne({ _id: beingFollow }, { $push: { followers: follower } })
+        const followUser = await users.updateOne({ _id: follower.id }, { $push: { following: beingFollow } })
+        const followingUser = await users.updateOne({ _id: beingFollow }, { $push: { followers: follower.id }})
+        const notify = await users.updateOne({ _id: beingFollow }, { $push:  {notification : `${req.user.name} started following you`}})
         await followUser.save()
         await followingUser.save()
+        await notify.save()
         return res.json({ success: 'following success' })
       } else {
-        const unFollowUser = await users.updateOne({ _id: follower }, { $pull: { following: beingFollow } })
-        const unFollowingUser = await users.updateOne({ _id: beingFollow }, { $pull: { followers: follower } })
+        const unFollowUser = await users.updateOne({ _id: follower.id }, { $pull: { following: beingFollow } })
+        const unFollowingUser = await users.updateOne({ _id: beingFollow }, { $pull: { followers: follower.id } })
         await unFollowUser.save()
         await unFollowingUser.save()
         return res.json({ success: 'unfollowing success' })
@@ -83,11 +85,17 @@ const follow = async (req, res) => {                     //is there a nicer way 
   // return res.json({error : 'self-follow?! seriously?'})
 }
 
+const clearNotification = async (req,res) => {
+    await req.user.updateOne({ $set : {'notification': [] }} , {multi:true})
+    return res.status(200).json({msg : 'Clear Notification'})
+}
+
 
 module.exports = {
   createNewUser,
   loginUser,
   getAllUsers,
   getUserByID,
-  follow
+  follow,
+  clearNotification
 }
