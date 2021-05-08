@@ -95,6 +95,13 @@ const clearNotification = async (req,res) => {
     return res.status(200).json({msg : 'Clear Notification'})
 }
 
+const mayKnow = async (req,res) => {
+  const list = req.user.following           //exclude the requesting user from the list
+  list.push(req.user._id)
+  const notFollowing = await users.find({_id : {$nin :list}},{_id:1,name:1,followers:1,avatar:1}).limit(2)
+  res.send(notFollowing)
+}
+
 
 module.exports = {
   createNewUser,
@@ -103,5 +110,6 @@ module.exports = {
   getUserByID,
   follow,
   clearNotification,
-  getNotificiation
+  getNotificiation,
+  mayKnow
 }

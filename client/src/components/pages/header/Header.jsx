@@ -15,6 +15,7 @@ export default function Header() {
 
     useEffect(() => {
         const search = async () => {
+            console.log('header getting notification')
            const getNotes = await axios({
                method : 'get',
                url : 'https://social-media-gilad.herokuapp.com/social/api/getnotes',   
@@ -25,11 +26,11 @@ export default function Header() {
            setNotification(getNotes.data)
         }
         search()
-    }, [])
+    },[token])
 
     const handlePop = async ()  => {
         setPopUp(!popup)
-        const clear = await axios({
+            await axios({
             method:'put',
             url : 'https://social-media-gilad.herokuapp.com/social/api/clearNotification',
             headers : {

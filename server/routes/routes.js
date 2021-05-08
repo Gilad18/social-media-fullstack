@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const auth = require('../middleware/auth')
+const newFile = require('../middleware/newFIle')
 const router = express.Router();
 const users = require('../models/users.model')
 const usersControllers = require('../controllers/users.controllers')
@@ -10,7 +11,7 @@ router.post('/signin' , (req,res) => {
     usersControllers.createNewUser(req,res)
 }).post('/login' , (req,res)=> {
 usersControllers.loginUser(req,res)
-}).post('/profile/newpost' , auth ,(req,res) => {
+}).post('/profile/newpost' ,auth, newFile.single('image') ,(req,res) => {
     postsControllers.newPost(req,res)
 }).get('/users' , (req,res)=> {
     usersControllers.getAllUsers(req,res)
@@ -30,6 +31,8 @@ usersControllers.loginUser(req,res)
     usersControllers.clearNotification(req,res)
 }).get('/getnotes' , auth , (req,res ) => {
     usersControllers.getNotificiation(req,res)
+}).get('/mayknow' , auth , (req,res) => {
+    usersControllers.mayKnow(req,res)
 })
 
 

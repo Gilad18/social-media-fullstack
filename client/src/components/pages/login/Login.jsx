@@ -20,6 +20,7 @@ export default function Login() {
     const createNewUser = async () => {
         if (password === confirm) {
             try {
+                console.log(gender)
                 const newUser = await axios({
                     method: 'post',
                     url: 'https://social-media-gilad.herokuapp.com/social/api/signin',
@@ -43,6 +44,7 @@ export default function Login() {
     }
     const login = async () => {
         try {
+            console.log('logging')
             const user = await axios({
                 method: 'post',
                 url: 'https://social-media-gilad.herokuapp.com/social/api/login',

@@ -8,6 +8,7 @@ export default function Post({ post }) {
     const token = localStorage.getItem('token')
     const [aPost , setPost] = useState(post)
     const [newCommentext , setNewCommentex] = useState('')
+    const [moreComments , setMoreComments] = useState(false)
 
     const timePassed = (date) => {
         const now = new Date()
@@ -48,7 +49,7 @@ export default function Post({ post }) {
         return `${then.getDate()}-${then.getMonth() + 1}-${then.getFullYear()}`
     }
     const likePost = async () => {
-       const like = await axios({
+        await axios({
             method : 'put',
             url : `https://social-media-gilad.herokuapp.com/social/api/${aPost._id}/like`,
             headers : {
@@ -58,7 +59,7 @@ export default function Post({ post }) {
     }
 
     const comment = async () => {
-        const comment = await axios({
+         await axios({
             method : 'put',
             url : `https://social-media-gilad.herokuapp.com/social/api/${aPost._id}/comment`,
             data : {
@@ -69,10 +70,21 @@ export default function Post({ post }) {
             }
         })
     }
+
+    const handleMoreComments = () => {
+        setMoreComments(!moreComments)
+    }
+
+    const arrayBufferToBase64 = (buffer) => {
+        var binary = '';
+        var bytes = [].slice.call(new Uint8Array(buffer));
+        bytes.forEach((b) => binary += String.fromCharCode(b));
+        return window.btoa(binary);
+    }
     return (
         <div className="singlePost">
             <Header as='h4'>
-                <Image circular size='big' src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
+                <Image circular size='big' alt="pic" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
                 <Header.Content>
                     {post.author.name}
                     <Header.Subheader>{timePassed(post.date)}</Header.Subheader>
@@ -81,9 +93,9 @@ export default function Post({ post }) {
             <div className="singlePostContent">
                 {post.content}
             </div>
-            {post.media &&
-                <div className="postImage">
-
+            {post.image &&
+                <div className="postImage" >
+                    <img style={{width:'100%', height:'100%'}}src={`data:image/jpg;base64,${arrayBufferToBase64(post.image.data)}`}/>
                 </div>
             }
             <Button as='div' color='blue' icon="heart" onClick={likePost}
@@ -91,16 +103,16 @@ export default function Post({ post }) {
                 <div className="writeComment">
                 <div className="ui comments">
                     <div className="comment">
-                        <div className="avatar "><img  src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg'/></div>
+                        <div className="avatar "><img alt="pic" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg'/></div>
                             <textarea onChange={(e)=>setNewCommentex(e.target.value)} placeholder="write comment..."/>
                              <button onClick={comment}><Icon name='comment' /></button>
                             </div>
                             </div>
                 </div>
             {post.comments.length > 0 &&
-                <Comment.Group>
-                    <Header as='h4' dividing>
-                        {post.comments.length} Comments</Header>
+                     <div className="ui comments"  style={ !moreComments ? {overflow:'hidden'}: {overflow:'visible'} }>
+                    <h4 className="ui dividing header" onClick={handleMoreComments}>
+                        {post.comments.length} Comments</h4>
                     {post.comments.map((item, index) => {
                         return <Comment key={index}>
                             <Comment.Avatar src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
@@ -109,7 +121,7 @@ export default function Post({ post }) {
                             <Comment.Text>{item.content}</Comment.Text>
                         </Comment>
                     })}
-                </Comment.Group>
+                    </div>
             }
         </div>
     )

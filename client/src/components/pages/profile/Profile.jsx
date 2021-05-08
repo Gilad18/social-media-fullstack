@@ -16,6 +16,8 @@ export default function Profile() {
     const [postText, setPostText] = useState('')
     const [newImage, setNewImage] = useState(null)
     const [uploadImageSec, setImageSec] = useState(false)
+    const [postMediaVisible, setpostMediaVisible] = useState(false)
+    const [postMedia , setPostMedia] = useState(null)
     const [imageUploadMess, setMessageIMG] = useState('')
     const [loading , setLoading] = useState(false)
 
@@ -31,7 +33,7 @@ export default function Profile() {
             setUser(theUser.data)
         }
         search()
-    }, [])
+    }, [token , userID])
 
     const arrayBufferToBase64 = (buffer) => {
         var binary = '';
@@ -60,7 +62,7 @@ export default function Profile() {
 
     const createNewPost = async () => {
         try {
-            const newPost = await axios({
+                await axios({
                 method: 'post',
                 url: 'https://social-media-gilad.herokuapp.com/social/api/profile/newpost',
                 data: {
@@ -79,6 +81,10 @@ export default function Profile() {
         }
     }
 
+    const addImageToPost = async () => {
+        setpostMediaVisible(!postMediaVisible)
+    }
+
     const handleLoadImageSec = () => {
         setImageSec(!uploadImageSec)
     }
@@ -88,10 +94,10 @@ export default function Profile() {
             <div className="profileBio">
                 <div className="profileBioImage">
                     {user.avatar ?
-                        <img className="profilePic" alt={`${user.name}'s profile picture`}
+                        <img className="profilePic" alt={`${user.name}`}
                             src={`data:image/jpg;base64,${arrayBufferToBase64(user.avatar.data)}`} />
                         :
-                        <img className="profilePic" alt="Empty User Pic"
+                        <img className="profilePic" alt="Empty"
                             src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
                     }
                     <i className="black circular small camera icon" onClick={handleLoadImageSec}></i>
@@ -116,7 +122,19 @@ export default function Profile() {
             <p style={{ textAlign: 'center', color:'#f4a261', fontWeight: 'bold', fontSize: '14px' }}>{imageUploadMess}</p>
             <div className="profileNewPost">
                 <textarea placeholder="What's on your mind honey? Spill it out..." onChange={(e) => setPostText(e.target.value)} />
+                <div className="newPostButtons">
+                <Button onClick={addImageToPost} content='Add Image' secondary />
                 <Button onClick={createNewPost} content='Share Post' primary />
+                </div>
+                {
+                        postMediaVisible &&
+
+                        <div className="uploadImage">
+                            <Form.Input type="file" onChange={(e) => setPostMedia(e.target.files[0])} />
+                            {/* <button className={`ui basic button  ${ loading ?'loading' : ''} `} 
+                            onClick={uploadImage}>Upload</button> */}
+                        </div>
+                    }
             </div>
             <MayKnow/>
         </div>

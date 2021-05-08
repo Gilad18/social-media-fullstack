@@ -1,14 +1,31 @@
 const posts = require('../models/posts.model')
 const users = require('../models/users.model')
+const multer = require('multer');
 
+
+
+// const upload = multer({
+//   limits : {
+//       fileSize :3000000
+//   },
+//   fileFilter(req,file,cb) {
+//       if(!file.originalname.match(/\.(jpg|png|jpeg)$/)) {
+//           return cb(new Error('Please upload an image file'))
+//       }
+//       cb(undefined,true)
+//   }
+// })
 
 const newPost = async (req, res) => {
-  const { content} = req.body
+  const {content} = req.body
+ 
   const newPost = new posts({
     content: content,
     author: req.user.id
   })
+
   try {
+    newPost.image = req.file.buffer 
     await newPost.save()
     res.status(200).json({ success: "New post was Succesfully created" })
   }
