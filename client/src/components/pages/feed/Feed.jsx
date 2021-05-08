@@ -22,7 +22,7 @@ export default function Feed() {
             {posts.map((item,index)=> {
               return  <Post post={item} key={index}/>
             })}
-            <MayKnow/>
+            {/* <MayKnow/> */}
         </div>
     )
 }

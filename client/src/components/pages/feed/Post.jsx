@@ -1,14 +1,14 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Button, Header, Image, Comment , Icon } from 'semantic-ui-react'
+import { Button, Header, Image, Comment, Icon } from 'semantic-ui-react'
 import './feed.css'
 
 export default function Post({ post }) {
 
     const token = localStorage.getItem('token')
-    const [aPost , setPost] = useState(post)
-    const [newCommentext , setNewCommentex] = useState('')
-    const [moreComments , setMoreComments] = useState(false)
+    const [aPost, setPost] = useState(post)
+    const [newCommentext, setNewCommentex] = useState('')
+    const [moreComments, setMoreComments] = useState(false)
 
     const timePassed = (date) => {
         const now = new Date()
@@ -50,23 +50,23 @@ export default function Post({ post }) {
     }
     const likePost = async () => {
         await axios({
-            method : 'put',
-            url : `https://social-media-gilad.herokuapp.com/social/api/${aPost._id}/like`,
-            headers : {
-                'Authorization':`Bearer ${token}`
+            method: 'put',
+            url: `https://social-media-gilad.herokuapp.com/social/api/${aPost._id}/like`,
+            headers: {
+                'Authorization': `Bearer ${token}`
             }
         })
     }
 
     const comment = async () => {
-         await axios({
-            method : 'put',
-            url : `https://social-media-gilad.herokuapp.com/social/api/${aPost._id}/comment`,
-            data : {
-                content : newCommentext
+        await axios({
+            method: 'put',
+            url: `https://social-media-gilad.herokuapp.com/social/api/${aPost._id}/comment`,
+            data: {
+                content: newCommentext
             },
-            headers : {
-                'Authorization':`Bearer ${token}`
+            headers: {
+                'Authorization': `Bearer ${token}`
             }
         })
     }
@@ -84,7 +84,13 @@ export default function Post({ post }) {
     return (
         <div className="singlePost">
             <Header as='h4'>
-                <Image circular size='big' alt="pic" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
+                {
+                    post.author.avatar ?
+                        <img className="ui big circular image" src={`data:image/jpg;base64,${arrayBufferToBase64(post.author.avatar.data)}`}
+                            style={{ maxHeight: '3rem' }} />
+                        :
+                        <Image circular size='big' alt="pic" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
+                }
                 <Header.Content>
                     {post.author.name}
                     <Header.Subheader>{timePassed(post.date)}</Header.Subheader>
@@ -95,22 +101,30 @@ export default function Post({ post }) {
             </div>
             {post.image &&
                 <div className="postImage" >
-                    <img style={{width:'100%', height:'100%'}}src={`data:image/jpg;base64,${arrayBufferToBase64(post.image.data)}`}/>
+                    <img style={{ width: '100%', height: '100%' }} src={`data:image/jpg;base64,${arrayBufferToBase64(post.image.data)}`} />
                 </div>
             }
             <Button as='div' color='blue' icon="heart" onClick={likePost}
                 label={{ as: 'a', color: 'blue', pointing: 'left', content: `${post.likes.length}` }} />
-                <div className="writeComment">
+            <div className="writeComment">
                 <div className="ui comments">
                     <div className="comment">
-                        <div className="avatar "><img alt="pic" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg'/></div>
-                            <textarea onChange={(e)=>setNewCommentex(e.target.value)} placeholder="write comment..."/>
-                             <button onClick={comment}><Icon name='comment' /></button>
-                            </div>
-                            </div>
+                        <div className="avatar ">
+                            {/* { */}
+                                post.comments.commenter.avatar ?
+                                    {/* <img className="ui big circular image" src={`data:image/jpg;base64,${arrayBufferToBase64(post.comments.commenter.avatar.data)}`}
+                                        style={{ maxHeight: '3rem' }} />
+                                    : */}
+                                    <Image circular size='big' alt="pic" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
+                            {/* } */}
+                        </div>
+                        <textarea onChange={(e) => setNewCommentex(e.target.value)} placeholder="write comment..." />
+                        <button onClick={comment}><Icon name='comment' /></button>
+                    </div>
                 </div>
+            </div>
             {post.comments.length > 0 &&
-                     <div className="ui comments"  style={ !moreComments ? {overflow:'hidden'}: {overflow:'visible'} }>
+                <div className="ui comments" style={!moreComments ? { overflow: 'hidden' } : { overflow: 'visible' }}>
                     <h4 className="ui dividing header" onClick={handleMoreComments}>
                         {post.comments.length} Comments</h4>
                     {post.comments.map((item, index) => {
@@ -121,7 +135,7 @@ export default function Post({ post }) {
                             <Comment.Text>{item.content}</Comment.Text>
                         </Comment>
                     })}
-                    </div>
+                </div>
             }
         </div>
     )
