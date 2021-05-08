@@ -1,20 +1,6 @@
 const posts = require('../models/posts.model')
 const users = require('../models/users.model')
-const multer = require('multer');
 
-
-
-// const upload = multer({
-//   limits : {
-//       fileSize :3000000
-//   },
-//   fileFilter(req,file,cb) {
-//       if(!file.originalname.match(/\.(jpg|png|jpeg)$/)) {
-//           return cb(new Error('Please upload an image file'))
-//       }
-//       cb(undefined,true)
-//   }
-// })
 
 const newPost = async (req, res) => {
   const {content} = req.body
@@ -47,6 +33,22 @@ const getAllPosts =  (req, res) => {
   }
   catch (err) {
     res.send(err)
+  }
+}
+
+const getRelevantPosts = async (req,res) => {        //get posts by people ypu follow from sorted from newest to latest
+  const list = req.user.following
+  try {
+    const theposts =   posts.find({author : {$in : list}}).sort({date : -1 })
+      .populate({ path: 'likes', select: ['name', 'avatar'] })
+      .populate({ path: 'comments.commenter', select: ['name', 'avatar'] })
+      .exec(function (err, docs) {
+        if (err) return next(err);
+        res.json(docs)
+      })
+  }
+  catch(err) {
+    res.json(err)
   }
 }
 
@@ -84,6 +86,7 @@ const likePost = async (req, res) => {
     res.send(err)
   }
 }
+
 const newComment = async (req, res) => {
   const post = req.params.post
   const commenter = req.user
@@ -107,5 +110,6 @@ module.exports = {
   getPostByID,
   getAllPosts,
   likePost,
-  newComment
+  newComment,
+  getRelevantPosts
 }

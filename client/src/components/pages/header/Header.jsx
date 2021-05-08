@@ -26,7 +26,7 @@ export default function Header() {
            setNotification(getNotes.data)
         }
         search()
-    },[token])
+    },[token ])
 
     const handlePop = async ()  => {
         setPopUp(!popup)

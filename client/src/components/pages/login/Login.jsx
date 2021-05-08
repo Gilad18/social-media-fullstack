@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import './login.css'
-import { Button, Form, Radio } from 'semantic-ui-react';
+import {Form, Radio } from 'semantic-ui-react';
 
 export default function Login() {
 
@@ -16,8 +16,11 @@ export default function Login() {
     const [password, setPassword] = useState('')
     const [confirm, setConfirm] = useState('')
     const [message, setMessage] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const createNewUser = async () => {
+        setLoading(true)
+        setMessage('')
         if (password === confirm) {
             try {
                 console.log(gender)
@@ -30,21 +33,24 @@ export default function Login() {
                         password: password
                     }
                 })
-                setMessage(newUser.data.msg)
+                setLoading(false)
+                setMessage(newUser.data.success)
                 localStorage.setItem('token', newUser.data.token)
                 setTimeout(() => {
                     history.push(`/user/${newUser.data.newUser._id}/profile`)
                 }, 1500);
             } catch(error) {
                 console.log(error)
+                setLoading(false)
             }
         } else {
             setMessage('Passwords are not matched')
         }
     }
     const login = async () => {
+        setLoading(true)
+        setMessage('')
         try {
-            console.log('logging')
             const user = await axios({
                 method: 'post',
                 url: 'https://social-media-gilad.herokuapp.com/social/api/login',
@@ -53,7 +59,8 @@ export default function Login() {
                     password: password
                 }
             })
-            setMessage(user.data.msg)
+            setLoading(false)
+            setMessage(user.data.success)
             localStorage.setItem('token', user.data.token)
             setTimeout(() => {
                 history.push(`/user/${user.data.user._id}/profile`)
@@ -61,6 +68,7 @@ export default function Login() {
         }
         catch (err) {
             console.log(err)
+            setLoading(false)
             setMessage('Wrong Inputs, try again')
         }
     }
@@ -89,7 +97,10 @@ export default function Login() {
                         type='password' placeholder='Password'
                         onChange={(e)=>setPassword(e.target.value)}
                     />
-                    <Button onClick={login} content='Login' primary />
+                    {/* <Button onClick={login} content='Login' primary /> */}
+                    <button className={`ui primary button  ${ loading ?'loading' : ''} `} onClick={login}>
+                        Log In
+                    </button>
                     {message}
                 </Form>
                 :
@@ -138,7 +149,9 @@ export default function Login() {
                             placeholder='Confirm Password' type="password"
                             onChange={(e) => setConfirm(e.target.value)} />
                     </Form.Field>
-                    <Button onClick={createNewUser} content='Sign Up' primary />
+                    {/* <Button onClick={createNewUser} content='Sign Up' primary /> */}
+                    <button className={`ui primary button  ${ loading ?'loading' : ''} `} onClick={createNewUser}>
+                    Sign Up </button>
                     <p style={{ color: 'red' }}> {message}</p>
                 </Form>
             }

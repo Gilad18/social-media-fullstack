@@ -87,7 +87,7 @@ export default function Post({ post }) {
                 {
                     post.author.avatar ?
                         <img className="ui big circular image" src={`data:image/jpg;base64,${arrayBufferToBase64(post.author.avatar.data)}`}
-                            style={{ maxHeight: '3rem' }} />
+                            style={{ maxHeight: '3rem' }} alt="pic" />
                         :
                         <Image circular size='big' alt="pic" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
                 }
@@ -101,7 +101,8 @@ export default function Post({ post }) {
             </div>
             {post.image &&
                 <div className="postImage" >
-                    <img style={{ width: '100%', height: '100%' }} src={`data:image/jpg;base64,${arrayBufferToBase64(post.image.data)}`} />
+                    <img style={{ width: '100%', height: '100%' }} alt="pic"
+                        src={`data:image/jpg;base64,${arrayBufferToBase64(post.image.data)}`} />
                 </div>
             }
             <Button as='div' color='blue' icon="heart" onClick={likePost}
@@ -110,13 +111,7 @@ export default function Post({ post }) {
                 <div className="ui comments">
                     <div className="comment">
                         <div className="avatar ">
-                            {/* { */}
-                                post.comments.commenter.avatar ?
-                                    {/* <img className="ui big circular image" src={`data:image/jpg;base64,${arrayBufferToBase64(post.comments.commenter.avatar.data)}`}
-                                        style={{ maxHeight: '3rem' }} />
-                                    : */}
-                                    <Image circular size='big' alt="pic" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
-                            {/* } */}
+                            <Image circular size='big' alt="pic" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
                         </div>
                         <textarea onChange={(e) => setNewCommentex(e.target.value)} placeholder="write comment..." />
                         <button onClick={comment}><Icon name='comment' /></button>

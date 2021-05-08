@@ -33,11 +33,13 @@ usersControllers.loginUser(req,res)
     usersControllers.getNotificiation(req,res)
 }).get('/mayknow' , auth , (req,res) => {
     usersControllers.mayKnow(req,res)
+}).get('/posts/relevant' , auth , (req,res) => {
+    postsControllers.getRelevantPosts(req,res)
 })
 
 
 
-const upload = multer({
+const upload = multer({               
     limits : {
         fileSize :3000000
     },
