@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import { Button, Icon } from 'semantic-ui-react'
 import axios from 'axios'
 // import {Link} from 'react-router-dom'
@@ -17,7 +17,7 @@ export default function MayKnow() {
         return window.btoa(binary);
     }
 
-    useEffect(() => {
+       useEffect(() => {
         const search = async () => {
             const users = await axios({
                 method: 'get',
@@ -27,9 +27,11 @@ export default function MayKnow() {
                 }
             })
             setPeople(users.data)
-        }
-        search()
-    }, [token])
+           }
+           search()
+       }, [])            
+
+       
 
     const followuser = async (id) => {
         await axios({
@@ -44,7 +46,8 @@ export default function MayKnow() {
     return (
         <div className="peopleYouMayKnowSec">
             <div className="ui teal left ribbon label">PeopleYou May Know</div>
-            <button style={{ float: 'right', backgroundColor: 'transparent', border: 'none' }}><Icon size='large' color='olive' name='refresh' /></button>
+            <button style={{ float: 'right', backgroundColor: 'transparent', border: 'none' }}>
+                <Icon size='large' color='olive' name='refresh' /></button>
             <div className="peopleYouMayKnow">
                 {people.map((item, index) => {
                     return <div key={index} className="ui card" style={{ maxWidth: '35%', padding: '1%', margin: '0' }}>

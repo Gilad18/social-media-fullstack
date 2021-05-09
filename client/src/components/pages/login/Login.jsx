@@ -34,7 +34,7 @@ export default function Login() {
                     }
                 })
                 setLoading(false)
-                setMessage(newUser.data.success)
+                setMessage(`Welcome back ${newUser.name.split(" ")[0]}`)
                 localStorage.setItem('token', newUser.data.token)
                 setTimeout(() => {
                     history.push(`/user/${newUser.data.newUser._id}/profile`)
@@ -61,6 +61,7 @@ export default function Login() {
             })
             setLoading(false)
             setMessage(user.data.success)
+            console.log(user)
             localStorage.setItem('token', user.data.token)
             setTimeout(() => {
                 history.push(`/user/${user.data.user._id}/profile`)
