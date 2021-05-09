@@ -4,14 +4,18 @@ const users = require('../models/users.model')
 
 const newPost = async (req, res) => {
   const {content} = req.body
+  const user = req.user
+  console.log('hey')
  
   const newPost = new posts({
     content: content,
-    author: req.user.id
+    author: user.id
   })
 
   try {
-    newPost.image = req.file.buffer 
+    if(req.file) {
+      newPost.image = req.file.buffer 
+    }
     await newPost.save()
     res.status(200).json({ success: "New post was Succesfully created" })
   }

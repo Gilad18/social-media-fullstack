@@ -48,7 +48,7 @@
 
 
 .comment textarea {
-   width : 73vw;
+   width : 80vw;
    height: 100%;
    background-color: #A9A9A9;
    border : none ;
@@ -84,6 +84,15 @@ textarea::placeholder {
     height: 10vh;
 }
 
+.adInfo a {
+    font-size: large;
+    font-weight: bold;
+    background-color: #2a9d8f;
+    padding: 3%;
+    border-radius: 15px;
+    color: white;
+}
+
 
 @media only screen and (min-width: 900px) {
     .feedPage {
@@ -92,5 +101,9 @@ textarea::placeholder {
     }
     .singlePost {
         width: 60vh;
+        border : 1px solid black;
+    }
+    .feedPage{
+        background-color: white;
     }
   }

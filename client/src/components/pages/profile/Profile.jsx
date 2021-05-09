@@ -61,17 +61,24 @@ export default function Profile() {
     }
 
     const createNewPost = async () => {
+        let bodyFormData = new FormData();
+            bodyFormData.append('content', postText);
+            console.log(bodyFormData)
+        if (postMedia!==null) {
+            bodyFormData.append('image', postMedia);
+        }
+           console.log(bodyFormData)
         try {
-                await axios({
+              const newPostR =  await axios({
                 method: 'post',
                 url: 'https://social-media-gilad.herokuapp.com/social/api/profile/newpost',
-                data: {
-                    content: postText
-                },
+                data: bodyFormData,
                 headers : {
-                    'Authorization':`Bearer ${token}`
+                    'Authorization':`Bearer ${token}`,
+                    "Content-Type": "multipart/form-data"
                 }
             })
+            setMessageIMG(newPostR.data.success)
             setTimeout(() => {
                 history.push(`/user/${userID.id}/feed`)
             }, 1500);

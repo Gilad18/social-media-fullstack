@@ -109,10 +109,10 @@ export default function Post({ post }) {
                 label={{ as: 'a', color: 'blue', pointing: 'left', content: `${post.likes.length}` }} />
             <div className="writeComment">
                 <div className="ui comments">
-                    <div className="comment">
-                        <div className="avatar ">
+                    <div className="comment" style={{margin : 'auto'}}>
+                        {/* <div className="avatar ">
                             <Image circular size='big' alt="pic" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
-                        </div>
+                        </div> */}
                         <textarea onChange={(e) => setNewCommentex(e.target.value)} placeholder="write comment..." />
                         <button onClick={comment}><Icon name='comment' /></button>
                     </div>

@@ -11,7 +11,7 @@ router.post('/signin' , (req,res) => {
     usersControllers.createNewUser(req,res)
 }).post('/login' , (req,res)=> {
 usersControllers.loginUser(req,res)
-}).post('/profile/newpost' ,auth, newFile.single('image') ,(req,res) => {
+}).post('/profile/newpost' ,auth , newFile.single('image') ,(req,res) => {
     postsControllers.newPost(req,res)
 }).get('/users' , (req,res)=> {
     usersControllers.getAllUsers(req,res)

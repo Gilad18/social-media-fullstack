@@ -10,14 +10,15 @@
     border-bottom: 2px solid black;
 }
 
-.peopleYouMayKnowSec {
+.peopleYouMayKnowSec , .sponseredSec {
     width: 100vw;
     height: 40vh;
     background-color: #264653;
     padding: 2%;
+    margin-bottom: 3%;
 }
 
-.peopleYouMayKnow {
+.peopleYouMayKnow , .sponseredAd{
     width: 100%;
     height: 100%;
     display: flex;
@@ -26,3 +27,42 @@
     text-align: center;
     box-sizing: border-box;
 }
+.sponseredAd{
+    width: 80%;
+    height: 80%;
+    margin: 1rem auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.adImage {
+    width: 100%;
+    height: 60%;
+}
+.adInfo {
+    width: 100%;
+    height: 40%;
+    padding: 1%;
+} 
+.adInfoDetails {
+    color: black;
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+}
+.adInfoDetails h4{
+    margin: 0;
+}
+
+.sponseredSec {
+    background-color: white;
+}
+
+@media only screen and (min-width: 900px) {
+    .peopleYouMayKnowSec , .sponseredSec {
+        width: 60vh;
+        border : 1px solid black;
+    }
+  }

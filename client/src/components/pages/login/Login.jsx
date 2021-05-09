@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import './login.css'
-import {Form, Radio } from 'semantic-ui-react';
+import {Form} from 'semantic-ui-react';
 
 export default function Login() {
 
     const history = useHistory();
 
     const [exist, setExist] = useState(false)
-    const [gender, setGender] = useState(null)
+    // const [gender, setGender] = useState(null)
     const [toggleMessage , setToggleMessage] = useState(`Already have an account? login  `)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -23,7 +23,6 @@ export default function Login() {
         setMessage('')
         if (password === confirm) {
             try {
-                console.log(gender)
                 const newUser = await axios({
                     method: 'post',
                     url: 'https://social-media-gilad.herokuapp.com/social/api/signin',
@@ -36,6 +35,7 @@ export default function Login() {
                 setLoading(false)
                 setMessage(`Welcome back ${newUser.name.split(" ")[0]}`)
                 localStorage.setItem('token', newUser.data.token)
+                // localStorage.setItem('profile', newUser.data.token)
                 setTimeout(() => {
                     history.push(`/user/${newUser.data.newUser._id}/profile`)
                 }, 1500);
@@ -109,7 +109,7 @@ export default function Login() {
                     <div className="toggleMessage">
                         <p>{toggleMessage}</p><p style={{color:'#e9c46a' , fontWeight:'bold'}} onClick={handleClick}> here</p></div>
                     <h2>New Account</h2>
-                    <div className="radioSec">
+                    {/* <div className="radioSec">
                         <Form.Field>
                             <Radio
                                 label='Male' name='gender' color='orange'
@@ -125,7 +125,7 @@ export default function Login() {
                                 label='Other' name='gender'
                                 onChange={(e) => setGender(e.target.value)} />
                         </Form.Field>
-                    </div>
+                    </div> */}
                     <Form.Field>
                         <Form.Input
                             icon='user' iconPosition='left'

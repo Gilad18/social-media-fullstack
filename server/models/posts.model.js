@@ -21,7 +21,8 @@ const postSchema = mongoose.Schema({
             onDate :{type: Date, required: false, unique: false, default: Date.now}
         }],
     image: {
-        type: Buffer
+        type: Buffer,
+        required :false
     },
     date: {
         type: Date,

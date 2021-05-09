@@ -7,8 +7,8 @@ import './utilities.css'
 export default function MayKnow() {
 
     const token = localStorage.getItem('token')
-
     const [people, setPeople] = useState([])
+
 
     const arrayBufferToBase64 = (buffer) => {
         var binary = '';
@@ -21,7 +21,7 @@ export default function MayKnow() {
         const search = async () => {
             const users = await axios({
                 method: 'get',
-                url: `http://localhost:4500/social/api/mayknow`,      //change to heroku after git push
+                url: `https://social-media-gilad.herokuapp.com/social/api/mayknow`,      //change to heroku after git push
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
