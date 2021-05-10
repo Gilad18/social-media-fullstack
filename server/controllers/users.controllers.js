@@ -53,6 +53,21 @@ const getAllUsers = async (req, res) => {
   }
 }
 
+const getFreindByID =  (req,res) => {
+  const id = req.params.user
+  try {
+      users.findOne({ _id: id },{notification:0,email:0,password:0,tokens:0})
+     .populate({ path: 'following', select: ['name', 'avatar'] })
+    .populate({ path: 'followers', select: ['name', 'avatar'] }).exec(function (err, docs) {
+      if (err) return next(err);
+      res.json(docs)
+    })
+  }
+  catch(err) {
+    res.json(err)
+  }
+}
+
 const getUserByID = async (req, res) => {
   const id = req.params.id
   try {
@@ -124,5 +139,6 @@ module.exports = {
   follow,
   clearNotification,
   getNotificiation,
-  mayKnow
+  mayKnow,
+  getFreindByID
 }

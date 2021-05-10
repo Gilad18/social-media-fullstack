@@ -37,8 +37,9 @@ usersControllers.loginUser(req,res)
     postsControllers.getRelevantPosts(req,res)
 }).put('/profile/logout' , auth , (req,res) => {
     usersControllers.logout(req,res)
+}).get('/friend/:user', auth , (req,res)=> {
+    usersControllers.getFreindByID(req,res)
 })
-
 
 
 const upload = multer({               

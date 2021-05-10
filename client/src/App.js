@@ -4,7 +4,8 @@ import Header from '../src/components/pages/header/Header'
 import Login from '../src/components/pages/login/Login'
 import Feed from '../src/components/pages/feed/Feed'
 import Profile from '../src/components/pages/profile/Profile'
-import Explore from '../src/components/pages/explore/Explore'
+// import Explore from '../src/components/pages/explore/Explore'
+import Friend from './components/pages/firiend/Friend'
 import 'semantic-ui-css/semantic.min.css'
 import './App.css';
 
@@ -19,7 +20,8 @@ function App() {
         <Route path="/user/:id" component={Header}/>
         <Route path="/user/:id/feed" exact component={Feed}/>
         <Route path="/user/:id/profile" exact component={Profile}/>
-        <Route path="/user/:id/explore" exact component={Explore}/>
+        <Route path="/user/friend/:id" exact component={Friend}/>
+        {/* <Route path="/user/:id/explore" exact component={Explore}/> */}
     </div>
     </BrowserRouter>
 

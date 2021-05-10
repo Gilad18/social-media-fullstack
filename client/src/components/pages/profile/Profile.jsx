@@ -30,6 +30,7 @@ export default function Profile() {
                     'Authorization':`Bearer ${token}`
                 }
             })
+            console.log(theUser)
             setUser(theUser.data)
         }
         search()

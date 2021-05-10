@@ -1,11 +1,7 @@
 .profileSec{
-    /* min-width: 60vw; */
-    /* max-width: 60vw; */
     width: 100vw;
-    /* height: 100vh; */
     position: relative;
     top: 5rem;
-    /* background-color: blue; */
 }
 
 input:focus , textarea:focus, button:focus {

@@ -1,0 +1,14 @@
+.freindSec{
+    width: 100vw;
+    position: relative;
+    top: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profileBio{
+    width: 100%;
+    min-height:  25vh;
+    display: flex;
+}
