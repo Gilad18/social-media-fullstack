@@ -63,7 +63,7 @@ export default function Profile() {
     const createNewPost = async () => {
         let bodyFormData = new FormData();
             bodyFormData.append('content', postText);
-            console.log(bodyFormData)
+            
         if (postMedia!==null) {
             bodyFormData.append('image', postMedia);
         }

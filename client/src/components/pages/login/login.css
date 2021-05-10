@@ -6,31 +6,34 @@
     text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
 }
 
 .logoDiv {
-    width: 10rem;
-    height: 10rem;
+    width: 15rem;
+    min-height: 15rem;
     background-color: transparent;
-    /* background-image: url('../../utilities/sociallogo.png'); */
-    background-color: chocolate;
-    background-size: cover;
+    background-image: url('../../utilities//logoS.png');
+    background-size: contain;
     position: relative;
-    top: 5rem;
 }
 
 .toggleMessage {
     display: flex;
     text-align: center;
-    justify-content: space-evenly;
-    width: 80vw;
+    width: 72vw;
+    min-height: 10vh;
+}
+.toggleMessage p {
+    margin-right: 1%;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 form{
     width: 80vw;
-    height: 60vh;
+    min-height: 50vh;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -43,6 +46,8 @@ form{
     justify-content: space-evenly;
 }
 
-/* button {
-    background-color: #2a9d8f !important;
-} */
+@media only screen and (min-width: 900px) {
+     form {
+        width: 50vh;
+    }
+  }

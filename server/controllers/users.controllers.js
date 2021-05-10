@@ -31,6 +31,18 @@ const loginUser = async (req, res) => {
 
 }
 
+const logout = async (req,res) => {
+   const user = req.user
+   try {
+     await user.updateOne({$set :{tokens : []}})
+     user.save()
+     res.status(200).json({success: 'You are now logged out, hope to see you soon'})
+   }
+   catch(err) {
+     res.json(err)
+   }
+}
+
 const getAllUsers = async (req, res) => {
   try {
     const allUsers = await users.find({})
@@ -106,6 +118,7 @@ const mayKnow = async (req,res) => {
 module.exports = {
   createNewUser,
   loginUser,
+  logout,
   getAllUsers,
   getUserByID,
   follow,

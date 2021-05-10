@@ -5,8 +5,7 @@ const users = require('../models/users.model')
 const newPost = async (req, res) => {
   const {content} = req.body
   const user = req.user
-  console.log('hey')
- 
+  
   const newPost = new posts({
     content: content,
     author: user.id

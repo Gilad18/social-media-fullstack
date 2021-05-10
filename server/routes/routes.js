@@ -35,6 +35,8 @@ usersControllers.loginUser(req,res)
     usersControllers.mayKnow(req,res)
 }).get('/posts/relevant' , auth , (req,res) => {
     postsControllers.getRelevantPosts(req,res)
+}).put('/profile/logout' , auth , (req,res) => {
+    usersControllers.logout(req,res)
 })
 
 

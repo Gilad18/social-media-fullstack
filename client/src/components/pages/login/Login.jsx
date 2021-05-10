@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import './login.css'
-import {Form} from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 
 export default function Login() {
 
@@ -10,7 +10,7 @@ export default function Login() {
 
     const [exist, setExist] = useState(false)
     // const [gender, setGender] = useState(null)
-    const [toggleMessage , setToggleMessage] = useState(`Already have an account? login  `)
+    const [toggleMessage, setToggleMessage] = useState(`Already have an account? login  `)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -27,7 +27,7 @@ export default function Login() {
                     method: 'post',
                     url: 'https://social-media-gilad.herokuapp.com/social/api/signin',
                     data: {
-                        name : name,
+                        name: name,
                         email: email,
                         password: password
                     }
@@ -39,7 +39,7 @@ export default function Login() {
                 setTimeout(() => {
                     history.push(`/user/${newUser.data.newUser._id}/profile`)
                 }, 1500);
-            } catch(error) {
+            } catch (error) {
                 console.log(error)
                 setLoading(false)
             }
@@ -78,60 +78,40 @@ export default function Login() {
         setExist(!exist)
         setMessage('')
         setPassword('')
-        exist ? setToggleMessage(`Alreday have an account? login ` ) : setToggleMessage(`New here? Create your account `)
+        exist ? setToggleMessage(`Alreday have an account? login `) : setToggleMessage(`Don't have an account? Sign up `)
     }
 
     return (
         <div className="landingPage">
-            <div className="logoDiv"></div>
+            <div className="logoDiv">    </div>
+            <div className="toggleMessage">
+                <p>{toggleMessage}</p><p style={{ color: '#e9c46a', fontWeight: 'bold', marginRight: '1.5rem' }} onClick={handleClick}> here</p></div>
             {exist ?
                 <Form>
-                     <div className="toggleMessage">
-                      <p>{toggleMessage}</p><p style={{color:'#e9c46a',fontWeight:'bold',marginRight:'1.5rem'}} onClick={handleClick}> here</p></div>
                     <h2>Log In</h2>
                     <Form.Input
                         icon='mail' iconPosition='left' type="email"
-                        placeholder='Email' onChange={(e)=>setEmail(e.target.value)}
+                        placeholder='Email' onChange={(e) => setEmail(e.target.value)}
                     />
                     <Form.Input
                         icon='lock' iconPosition='left'
                         type='password' placeholder='Password'
-                        onChange={(e)=>setPassword(e.target.value)}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
-                    {/* <Button onClick={login} content='Login' primary /> */}
-                    <button className={`ui primary button  ${ loading ?'loading' : ''} `} onClick={login}>
+                    <button className={`ui primary button  ${loading ? 'loading' : ''} `} onClick={login}>
                         Log In
                     </button>
                     {message}
                 </Form>
                 :
                 <Form>
-                    <div className="toggleMessage">
-                        <p>{toggleMessage}</p><p style={{color:'#e9c46a' , fontWeight:'bold'}} onClick={handleClick}> here</p></div>
                     <h2>New Account</h2>
-                    {/* <div className="radioSec">
-                        <Form.Field>
-                            <Radio
-                                label='Male' name='gender' color='orange'
-                                onChange={(e) => setGender(e.target.value)} />
-                        </Form.Field>
-                        <Form.Field>
-                            <Radio
-                                label='Female' name='gender'
-                                onChange={(e) => setGender(e.target.value)} />
-                        </Form.Field>
-                        <Form.Field>
-                            <Radio
-                                label='Other' name='gender'
-                                onChange={(e) => setGender(e.target.value)} />
-                        </Form.Field>
-                    </div> */}
                     <Form.Field>
                         <Form.Input
                             icon='user' iconPosition='left'
                             placeholder='Full Name' type="text"
                             onChange={(e) => setName(e.target.value)} />
-                    </Form.Field> 
+                    </Form.Field>
                     <Form.Field>
                         <Form.Input
                             icon='mail' iconPosition='left'
@@ -151,8 +131,8 @@ export default function Login() {
                             onChange={(e) => setConfirm(e.target.value)} />
                     </Form.Field>
                     {/* <Button onClick={createNewUser} content='Sign Up' primary /> */}
-                    <button className={`ui primary button  ${ loading ?'loading' : ''} `} onClick={createNewUser}>
-                    Sign Up </button>
+                    <button className={`ui primary button  ${loading ? 'loading' : ''} `} onClick={createNewUser}>
+                        Sign Up </button>
                     <p style={{ color: 'red' }}> {message}</p>
                 </Form>
             }
