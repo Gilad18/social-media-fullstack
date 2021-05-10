@@ -39,6 +39,8 @@ usersControllers.loginUser(req,res)
     usersControllers.logout(req,res)
 }).get('/friend/:user', auth , (req,res)=> {
     usersControllers.getFreindByID(req,res)
+}).get('/recent/:friend' ,auth , (req,res) => {    //add auth
+    postsControllers.getRecent(req,res)
 })
 
 

@@ -5,10 +5,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+   
 }
 
 .profileBio{
     width: 100%;
     min-height:  25vh;
     display: flex;
+}
+
+.recentPost {
+    margin-top: 10%;
+    border-bottom: 1px solid black;
 }

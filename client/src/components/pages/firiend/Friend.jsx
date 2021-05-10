@@ -4,7 +4,7 @@ import FunctionS from '../../utilities/functios'
 import axios from 'axios'
 import { useParams } from 'react-router'
 // import Sponser from '../../utilities/Sponsered'
-// import Post from '../feed/Post'
+import Post from '../feed/Post'
 import { Button } from 'semantic-ui-react'
 
 export default function Friend() {
@@ -12,17 +12,10 @@ export default function Friend() {
     const token = localStorage.getItem('token')
     const userID = useParams()
     const [friend, setFriend] = useState(null)
+    const [post , setPost] = useState(null)
 
     useEffect(() => {
         console.log(  userID.id)
-        console.log(token)
-
-        // const search = async () => {
-        //      user = await axios.get('http://localhost:4500/social/api/friend' ,
-        //      {friend : userID.id} ,
-        //      { headers: { Authorization: `Bearer ${token}` }})
-        //      console.log(user.data)
-        // }
         const search = async () => {
             const user = await axios({
                 method: 'get',
@@ -31,8 +24,15 @@ export default function Friend() {
                     'Authorization': `Bearer ${token}`
                 }
             })
-            console.log(user)
-            setFriend(null)
+            setFriend(user.data)
+            const post = await axios({
+                method: 'get',
+                url: `https://social-media-gilad.herokuapp.com/social/api/recent/${userID.id}`,
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            setPost(post.data)
         }
         search()
     }, [])
@@ -40,7 +40,7 @@ export default function Friend() {
     return (
         <div className="freindSec">
             {
-                friend==!null &&
+                 friend !== null &&
                 <React.Fragment>
                     <div className="profileBio">
                         <div className="profileBioImage">
@@ -53,17 +53,21 @@ export default function Friend() {
                             }
                         </div>
                         <div className="profileBioInfo">
-                            <h3>{friend}</h3>
+                            <h3>{friend.name}</h3>
                             <h5>Followed by {friend.followers.length} people</h5>
-                            <h6>Joined 05/05/2020</h6>
+                            <h6>Member since {friend.joined.split("T")[0]}</h6>
                         </div>
                     </div>
                     <Button primary>Follow</Button>
-                    <h4>Recent Post :</h4>
-                    {/* <Post/> */}
+                    <div className="recentPost">
+                    <h4 style={{borderBottom:'1px solid black'}}>Recent Post :</h4>
+                    {
+                         post !== null &&   <Post post={post} />
+                    }
+                    </div>
+                  
                 </React.Fragment>
             }
-                 HELLO
         </div>
     )
 }
