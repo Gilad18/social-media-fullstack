@@ -7,6 +7,7 @@ import './feed.css'
 export default function Post({ post }) {
 
     const token = localStorage.getItem('token')
+    const userID = localStorage.getItem('id')
     const [aPost, setPost] = useState(post)
     const [newCommentext, setNewCommentex] = useState('')
     const [moreComments, setMoreComments] = useState(false)
@@ -93,7 +94,7 @@ export default function Post({ post }) {
                         <Image circular size='big' alt="pic" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
                 }
                 <Header.Content>
-                    <Link to={`/user/friend/${post.author._id}`}>{post.author.name}</Link>
+                    <Link to={`/user/${userID}/friend/${post.author._id}`}>{post.author.name}</Link>
                     <Header.Subheader>{timePassed(post.date)}</Header.Subheader>
                 </Header.Content>
             </Header>

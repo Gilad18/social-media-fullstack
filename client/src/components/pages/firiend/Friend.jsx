@@ -19,15 +19,16 @@ export default function Friend() {
         const search = async () => {
             const user = await axios({
                 method: 'get',
-                url: `https://social-media-gilad.herokuapp.com/social/api/friend/${userID.id}`,
+                url: `https://social-media-gilad.herokuapp.com/social/api/friend/${userID.member}`,
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
             setFriend(user.data)
+            console.log(friend)
             const post = await axios({
                 method: 'get',
-                url: `https://social-media-gilad.herokuapp.com/social/api/recent/${userID.id}`,
+                url: `https://social-media-gilad.herokuapp.com/social/api/recent/${userID.member}`,
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -58,7 +59,9 @@ export default function Friend() {
                             <h6>Member since {friend.joined.split("T")[0]}</h6>
                         </div>
                     </div>
-                    <Button primary>Follow</Button>
+                    <Button primary>{
+                    friend.followers.some((it) => it._id === userID.id) ? 'Unfollow' : 'Follow'
+                    }</Button>
                     <div className="recentPost">
                     <h4 style={{borderBottom:'1px solid black'}}>Recent Post :</h4>
                     {
