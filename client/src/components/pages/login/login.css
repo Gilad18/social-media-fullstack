@@ -24,6 +24,8 @@
     text-align: center;
     width: 72vw;
     min-height: 10vh;
+    position: absolute;
+    top: 30vh;
 }
 .toggleMessage p {
     margin-right: 1%;

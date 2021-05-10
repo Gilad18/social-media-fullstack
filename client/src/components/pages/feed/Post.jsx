@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Button, Header, Image, Comment, Icon } from 'semantic-ui-react'
+import {Link} from 'react-router-dom'
 import './feed.css'
 
 export default function Post({ post }) {
@@ -92,7 +93,7 @@ export default function Post({ post }) {
                         <Image circular size='big' alt="pic" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
                 }
                 <Header.Content>
-                    {post.author.name}
+                    <Link to={`/user/friend/${post.author._id}`}>{post.author.name}</Link>
                     <Header.Subheader>{timePassed(post.date)}</Header.Subheader>
                 </Header.Content>
             </Header>

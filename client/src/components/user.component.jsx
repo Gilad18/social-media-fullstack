@@ -18,7 +18,7 @@ function User() {
                 <Route path="/user" component={Header}/>
                 <Route path="/user/:id/feed" exact component={Feed}/>
                 <Route path="/user/:id/profile" exact component={Profile}/>
-                <Route path="/user/:id/friend" exact component={Friend}/>
+                <Route path="/user/friend/:id" exact component={Friend}/>
             </div>
             </BrowserRouter>
 

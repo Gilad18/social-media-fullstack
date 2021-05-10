@@ -33,9 +33,9 @@ export default function Login() {
                     }
                 })
                 setLoading(false)
-                setMessage(`Welcome back ${newUser.name.split(" ")[0]}`)
+                console.log(newUser)
+                setMessage(newUser.data.success)
                 localStorage.setItem('token', newUser.data.token)
-                // localStorage.setItem('profile', newUser.data.token)
                 setTimeout(() => {
                     history.push(`/user/${newUser.data.newUser._id}/profile`)
                 }, 1500);
@@ -45,6 +45,7 @@ export default function Login() {
             }
         } else {
             setMessage('Passwords are not matched')
+            setLoading(false)
         }
     }
     const login = async () => {
@@ -60,8 +61,7 @@ export default function Login() {
                 }
             })
             setLoading(false)
-            setMessage(user.data.success)
-            console.log(user)
+            // setMessage('Welcome Back, ' + user.data.name.split(" ")[0])
             localStorage.setItem('token', user.data.token)
             setTimeout(() => {
                 history.push(`/user/${user.data.user._id}/profile`)

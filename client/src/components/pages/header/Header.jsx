@@ -43,7 +43,7 @@ export default function Header() {
         <div className="headerPage">
             <Link to={`/user/${id.id}/profile`}><Icon size='big'  name='user'/></Link>
             <Link to={`/user/${id.id}/feed`}><Icon size='big' name='newspaper'/></Link>
-            <Link to={`/user/${id.id}/friend/`}><Icon size='big' name='users'/></Link>
+            <Link to={`/user/111/friend`}><Icon size='big' name='users'/></Link>
             <i className='big  search icon'></i>
             <i className={`big  alarm icon ${ notification.length > 0  ?'red' : 'black'}`} onClick={handlePop}></i>
             {popup && <Notification notes={notification}/> }
