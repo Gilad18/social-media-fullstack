@@ -1,13 +1,14 @@
-import React, { useState , useEffect } from 'react'
-import { Button, Icon } from 'semantic-ui-react'
+import React, { useState, useEffect } from 'react'
+import { Icon } from 'semantic-ui-react'
 import axios from 'axios'
-// import {Link} from 'react-router-dom'
 import './utilities.css'
 
 export default function MayKnow() {
 
     const token = localStorage.getItem('token')
     const [people, setPeople] = useState([])
+    const [loading , setLoading] = useState(false)
+    const [finished , setFinish] = useState(false)
 
 
     const arrayBufferToBase64 = (buffer) => {
@@ -17,23 +18,28 @@ export default function MayKnow() {
         return window.btoa(binary);
     }
 
-       useEffect(() => {
-        const search = async () => {
-            const users = await axios({
-                method: 'get',
-                url: `https://social-media-gilad.herokuapp.com/social/api/mayknow`,      //change to heroku after git push
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            setPeople(users.data)
-           }
-           search()
-       }, [])            
+    const search = async () => {
+        const users = await axios({
+            method: 'get',
+            url: `https://social-media-gilad.herokuapp.com/social/api/mayknow`,      //change to heroku after git push
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        setPeople(users.data)
+        if(people.length<1) {
+            setFinish(true)
+        }
+       }
 
-       
+    useEffect(() => {
+        search()
+    }, [token])
+
+
 
     const followuser = async (id) => {
+        setLoading(true)
         await axios({
             method: 'put',
             url: `https://social-media-gilad.herokuapp.com/social/api/${id}/follow`,
@@ -41,13 +47,13 @@ export default function MayKnow() {
                 'Authorization': `Bearer ${token}`
             }
         })
+        search()
+        setLoading(false)
     }
 
     return (
-        <div className="peopleYouMayKnowSec">
+        <div className="peopleYouMayKnowSec" style={finished ? {display:'none'}: {display:'block'}}>
             <div className="ui teal left ribbon label">PeopleYou May Know</div>
-            <button style={{ float: 'right', backgroundColor: 'transparent', border: 'none' }}>
-                <Icon size='large' color='olive' name='refresh' /></button>
             <div className="peopleYouMayKnow">
                 {people.map((item, index) => {
                     return <div key={index} className="ui card" style={{ maxWidth: '35%', padding: '1%', margin: '0' }}>
@@ -62,7 +68,8 @@ export default function MayKnow() {
                         <div className="content">
                             <div className="header" style={{ fontSize: '14px' }}>{item.name.split(" ")[0]}</div>
                             <div className="extra content" style={{ marginBottom: '10%' }}><i aria-hidden="true" className="user icon"></i>{item.followers.length}</div>
-                            <Button onClick={() => followuser(item._id)} secondary>Follow</Button>
+                            <button  onClick={() => followuser(item._id)}
+                             className={`ui primary button ${ loading ? 'disabled' : ''}`}>Follow</button>
                         </div>
                     </div>
                 })}

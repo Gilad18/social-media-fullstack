@@ -26,12 +26,12 @@ export default function Feed() {
             })
             const posts = allPost.data
             const theSplitIndex = Math.ceil(posts.length / 2)
-            setPostC(posts.slice(0, theSplitIndex))
+            setPostA(posts.slice(0, theSplitIndex))
             console.log(postsA)
-            setPostD(posts.slice(theSplitIndex, posts.length))
+            setPostB(posts.slice(theSplitIndex, posts.length))
         }
         search()
-    }, [])
+    },[token])
 
     const morePosts = async () => {
         const allPost = await axios({
@@ -43,9 +43,9 @@ export default function Feed() {
         })
         const posts = allPost.data
         const theSplitIndex = Math.ceil(posts.length / 2)
-        setPostA(posts.slice(0, theSplitIndex))
+        setPostC(posts.slice(0, theSplitIndex))
         console.log(postsA)
-        setPostB(posts.slice(theSplitIndex, posts.length))
+        setPostD(posts.slice(theSplitIndex, posts.length))
     }
 
     return (

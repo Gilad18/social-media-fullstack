@@ -8,7 +8,7 @@ export default function Login() {
 
     const history = useHistory();
 
-    const [exist, setExist] = useState(false)
+    const [exist, setExist] = useState(true)
     // const [gender, setGender] = useState(null)
     const [toggleMessage, setToggleMessage] = useState(`Already have an account? login  `)
     const [name, setName] = useState('')

@@ -22,22 +22,22 @@ export default function Profile() {
     const [postMedia , setPostMedia] = useState(null)
     const [imageUploadMess, setMessageIMG] = useState('')
     const [loading , setLoading] = useState(false)
-
+    
     useEffect(() => {
-        const search = async () => {
-            const theUser = await axios({
-                method : 'get',
-                url : `https://social-media-gilad.herokuapp.com/social/api/profile/${userID.id}`,
-                headers : {
-                    'Authorization':`Bearer ${token}`
-                }
-            })
-            console.log(theUser)
-            setUser(theUser.data)
-        }
         search()
     }, [token , userID])
 
+    const search = async () => {
+        const theUser = await axios({
+            method : 'get',
+            url : `https://social-media-gilad.herokuapp.com/social/api/profile/${userID.id}`,
+            headers : {
+                'Authorization':`Bearer ${token}`
+            }
+        })
+        console.log(theUser)
+        setUser(theUser.data)
+    }
     const uploadImage = async () => {
         setLoading(true)
         let bodyFormData = new FormData();
@@ -52,6 +52,7 @@ export default function Profile() {
             setImageSec(false)
             setMessageIMG(newProfilePic.data.succes)   //change in server for all messages paths
             setLoading(false)
+            search();
             setTimeout(() => {
                 setMessageIMG('')
             }, 2000);
@@ -116,7 +117,7 @@ export default function Profile() {
 
                         <div className="uploadImage">
                             <Form.Input type="file" onChange={(e) => setNewImage(e.target.files[0])} />
-                            <button className={`ui basic button  ${ loading ?'loading' : ''} `} 
+                            <button className={`ui basic blue button  ${ loading ?'loading' : ''} `} 
                             onClick={uploadImage}>Upload</button>
                         </div>
                     }

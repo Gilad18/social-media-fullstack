@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './friend.css'
 import FunctionS from '../../utilities/functios'
 import axios from 'axios'
-import { useParams } from 'react-router'
-// import Sponser from '../../utilities/Sponsered'
+import { useParams, useHistory } from 'react-router'
 import Post from '../feed/Post'
 import { Button } from 'semantic-ui-react'
 
@@ -11,19 +10,17 @@ export default function Friend() {
 
     const token = localStorage.getItem('token')
     const userID = useParams()
+    const history = useHistory()
+
+
+    if(userID.id === userID.member) {
+        history.push(`/user/${userID.id}/profile`)
+    }
     const [friend, setFriend] = useState(null)
     const [post , setPost] = useState(null)
 
     useEffect(() => {
-        const search = async () => {
-            const user = await axios({
-                method: 'get',
-                url: `https://social-media-gilad.herokuapp.com/social/api/friend/${userID.member}`,
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            setFriend(user.data)
+        const fetch = async () => {
             const post = await axios({
                 method: 'get',
                 url: `https://social-media-gilad.herokuapp.com/social/api/recent/${userID.member}`,
@@ -34,9 +31,21 @@ export default function Friend() {
             setPost(post.data)
         }
         search()
+        fetch()
     }, [token,userID])
-
     
+    const search = async ()  => {
+        const user = await axios({
+            method: 'get',
+            url: `https://social-media-gilad.herokuapp.com/social/api/friend/${userID.member}`,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        setFriend(user.data)
+    }
+    
+
     const followuser = async (id) => {
         await axios({
             method: 'put',
@@ -45,6 +54,7 @@ export default function Friend() {
                 'Authorization': `Bearer ${token}`
             }
         })
+        search()
     }
 
     return (

@@ -43,6 +43,7 @@ const getAllPosts = (req, res) => {
 
 const getRelevantPosts = async (req, res) => {        //get posts by people ypu follow from sorted from newest to latest
   const list = req.user.following
+  list.push(req.user.id)
   const skip = parseInt(req.params.skip) 
   try {
     const theposts = posts.find({ author: { $in: list } }).sort({ date: -1 }).skip(skip).limit(10)
