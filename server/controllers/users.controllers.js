@@ -14,7 +14,7 @@ const createNewUser = async (req, res) => {
     res.status(200).json({ success: "New Account was Succesfully created", token , newUser })
   }
   catch (error) {
-    res.status(400).json({error} )
+    res.status(400).json({error})
   }
 }
 
@@ -23,7 +23,7 @@ const loginUser = async (req, res) => {
   try {
     const user = await users.findByCredentials(email, password)
     const token = await user.generateToken()
-    res.status(200).json({user , token })
+    res.status(200).json({message : `Welcome Back ${user.name.split(" ")[0]}` , user , token })
   }
   catch (err) {
     res.status(400).json({ error: "Incorrect Inputs" })

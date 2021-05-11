@@ -10,8 +10,8 @@ const userSchema = mongoose.Schema({
         required : true,
         unique: false,
         validate(value) {
-            if(value.length < 2) {
-                throw new Error('Name is too short')
+            if(value.length < 3) {
+                throw new Error('too short')
             }
         }
     },
@@ -21,7 +21,7 @@ const userSchema = mongoose.Schema({
         unique :true,
         validate(value) {
             if(!validator.isEmail(value)) {
-                throw new Error('Invalid Email Adress')
+                throw new Error('invalid Adress')
             }
         }
     },
@@ -30,8 +30,8 @@ const userSchema = mongoose.Schema({
         required :true,
         unique : true,
         validate(value) {
-            if(!validator.isStrongPassword(value)) {
-                throw new Error('Password must be min 8 chars and include at least 1 Upper,lower,num and symbol')
+            if(value.length < 5) {
+                throw new Error('too short (Minimun 5 chars)')
             }
         }
     },

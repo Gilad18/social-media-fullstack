@@ -12,6 +12,11 @@ const postSchema = mongoose.Schema({
         type: String,
         required: true,
         unique: false,
+        validate(value) {
+            if(value.length<1) {
+                throw new Error('empty post is like an empty soul, add text')
+            }
+        }
     },
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'users' }],
     comments: [

@@ -62,17 +62,17 @@ export default function Login() {
                 }
             })
             setLoading(false)
-            // setMessage('Welcome Back, ' + user.data.name.split(" ")[0])
+            setMessage(user.data.message)
             localStorage.setItem('token', user.data.token)
             localStorage.setItem('id', user.data.user._id)
             setTimeout(() => {
                 history.push(`/user/${user.data.user._id}/profile`)
             }, 1500);
-        }
+        }   
         catch (err) {
-            console.log(err)
+            console.log(err.response.data.error)
             setLoading(false)
-            setMessage('Wrong Inputs, try again')
+            setMessage(err.response.data.error)
         }
     }
 

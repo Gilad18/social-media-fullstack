@@ -42,18 +42,25 @@ export default function Profile() {
         setLoading(true)
         let bodyFormData = new FormData();
         bodyFormData.append('avatar', newImage);
-        const newProfilePic = await axios({
-            method: 'post',
-            url: `https://social-media-gilad.herokuapp.com/social/api/${userID.id}/uploadpic`,
-            data: bodyFormData,
-            headers: { "Content-Type": "multipart/form-data" }
-        })
-        setImageSec(false)
-        setMessageIMG(newProfilePic.data.succes)   //change in server for all messages paths
-        setLoading(false)
-        setTimeout(() => {
-            setMessageIMG('')
-        }, 2000);
+        try {
+            const newProfilePic = await axios({
+                method: 'post',
+                url: `https://social-media-gilad.herokuapp.com/social/api/${userID.id}/uploadpic`,
+                data: bodyFormData,
+                headers: { "Content-Type": "multipart/form-data" }
+            })
+            setImageSec(false)
+            setMessageIMG(newProfilePic.data.succes)   //change in server for all messages paths
+            setLoading(false)
+            setTimeout(() => {
+                setMessageIMG('')
+            }, 2000);
+        }
+        catch(err) {
+            setImageSec(false)
+            setMessageIMG('Image Upload failed, try agian')   //change in server for all messages paths
+            setLoading(false)
+        }
     }
 
     const createNewPost = async () => {

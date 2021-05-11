@@ -21,7 +21,7 @@ const newPost = async (req, res) => {
     res.status(200).json({ success: "New post was Succesfully created" })
   }
   catch (error) {
-    res.json(error)
+    res.json({error})
   }
 }
 
