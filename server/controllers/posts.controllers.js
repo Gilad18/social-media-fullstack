@@ -43,8 +43,9 @@ const getAllPosts = (req, res) => {
 
 const getRelevantPosts = async (req, res) => {        //get posts by people ypu follow from sorted from newest to latest
   const list = req.user.following
+  const skip = parseInt(req.params.skip) 
   try {
-    const theposts = posts.find({ author: { $in: list } }).sort({ date: -1 }).limit(10)
+    const theposts = posts.find({ author: { $in: list } }).sort({ date: -1 }).skip(skip).limit(10)
       .populate({ path: 'author', select: ['name', 'avatar'] })
       .populate({ path: 'likes', select: ['name', 'avatar'] })
       .populate({ path: 'comments.commenter', select: ['name', 'avatar'] })
