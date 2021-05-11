@@ -71,6 +71,7 @@ export default function Post({ post }) {
                 'Authorization': `Bearer ${token}`
             }
         })
+        setNewCommentex('')
     }
 
     const handleMoreComments = () => {
@@ -127,7 +128,9 @@ export default function Post({ post }) {
                     {post.comments.map((item, index) => {
                         return <Comment key={index}>
                             <Comment.Avatar src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
-                            <Comment.Author as='a'>{item.commenter.name}</Comment.Author>
+                            <Comment.Author as='a'>
+                               <Link to={`/user/${userID}/friend/${item.commenter._id}`}>{item.commenter.name}</Link>
+                                </Comment.Author>
                             <Comment.Metadata><div>{timePassed(item.onDate)}</div> </Comment.Metadata>
                             <Comment.Text>{item.content}</Comment.Text>
                         </Comment>

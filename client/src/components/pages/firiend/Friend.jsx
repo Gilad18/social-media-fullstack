@@ -15,7 +15,6 @@ export default function Friend() {
     const [post , setPost] = useState(null)
 
     useEffect(() => {
-        console.log(  userID.id)
         const search = async () => {
             const user = await axios({
                 method: 'get',
@@ -34,9 +33,21 @@ export default function Friend() {
                 }
             })
             setPost(post.data)
+            console.log('render')
         }
         search()
-    }, [])
+    }, [token,userID])
+
+    
+    const followuser = async (id) => {
+        await axios({
+            method: 'put',
+            url: `https://social-media-gilad.herokuapp.com/social/api/${id}/follow`,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    }
 
     return (
         <div className="freindSec">
@@ -59,7 +70,7 @@ export default function Friend() {
                             <h6>Member since {friend.joined.split("T")[0]}</h6>
                         </div>
                     </div>
-                    <Button primary>{
+                    <Button onClick={()=>followuser(userID.member)} primary> {
                     friend.followers.some((it) => it._id === userID.id) ? 'Unfollow' : 'Follow'
                     }</Button>
                     <div className="recentPost">

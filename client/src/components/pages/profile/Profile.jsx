@@ -2,9 +2,11 @@ import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useParams } from 'react-router'
+import FunctionS from '../../utilities/functios'
 import './profile.css'
 import { Button, Form} from 'semantic-ui-react'
 import MayKnow from '../../utilities/MayKnow'
+
 
 export default function Profile() {
 
@@ -35,13 +37,6 @@ export default function Profile() {
         }
         search()
     }, [token , userID])
-
-    const arrayBufferToBase64 = (buffer) => {
-        var binary = '';
-        var bytes = [].slice.call(new Uint8Array(buffer));
-        bytes.forEach((b) => binary += String.fromCharCode(b));
-        return window.btoa(binary);
-    }
 
     const uploadImage = async () => {
         setLoading(true)
@@ -103,7 +98,7 @@ export default function Profile() {
                 <div className="profileBioImage">
                     {user.avatar ?
                         <img className="profilePic" alt={`${user.name}`}
-                            src={`data:image/jpg;base64,${arrayBufferToBase64(user.avatar.data)}`} />
+                            src={`data:image/jpg;base64,${FunctionS(user.avatar.data)}`} />
                         :
                         <img className="profilePic" alt="Empty"
                             src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
@@ -124,7 +119,6 @@ export default function Profile() {
                 <div className="profileBioInfo">
                     <h3>{user.name}</h3>
                     {user.followers && <h5>Followed by {user.followers.length} people</h5>}
-                    {/* <h4>From Tel Aviv</h4> */}
                 </div>
             </div>
             <p style={{ textAlign: 'center', color:'#f4a261', fontWeight: 'bold', fontSize: '14px' }}>{imageUploadMess}</p>

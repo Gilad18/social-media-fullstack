@@ -1,6 +1,7 @@
+
 const posts = require('../models/posts.model')
 const users = require('../models/users.model')
-
+const sharp = require('sharp')
 
 const newPost = async (req, res) => {
   const { content } = req.body
@@ -13,7 +14,8 @@ const newPost = async (req, res) => {
 
   try {
     if (req.file) {
-      newPost.image = req.file.buffer
+     let picture = await sharp(req.file.buffer).resize(320,240).png().toBuffer()
+      newPost.image = picture
     }
     await newPost.save()
     res.status(200).json({ success: "New post was Succesfully created" })

@@ -4,6 +4,7 @@ const auth = require('../middleware/auth')
 const newFile = require('../middleware/newFIle')
 const router = express.Router();
 const users = require('../models/users.model')
+const sharp = require('sharp')
 const usersControllers = require('../controllers/users.controllers')
 const postsControllers = require('../controllers/posts.controllers')
 
@@ -58,7 +59,8 @@ const upload = multer({
 
 router.post('/:id/uploadpic' , upload.single('avatar') , async (req,res) => {
     try {
-        const user = await users.findOneAndUpdate({_id : req.params.id},{$set :{ "avatar" : req.file.buffer}})
+        let picture = await sharp(req.file.buffer).resize(200,200).png().toBuffer()
+        const user = await users.findOneAndUpdate({_id : req.params.id},{$set :{ "avatar" : picture}})
         await user.save()
         res.json({succes : 'Image was usccesfully uploaded'})
     }
