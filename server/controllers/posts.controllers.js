@@ -21,7 +21,7 @@ const newPost = async (req, res) => {
     res.status(200).json({ success: "New post was Succesfully created" })
   }
   catch (error) {
-    res.json({error})
+    res.status(400).json({error})
   }
 }
 
@@ -44,7 +44,8 @@ const getAllPosts = (req, res) => {
 const getRelevantPosts = async (req, res) => {        //get posts by people ypu follow from sorted from newest to latest
   const list = req.user.following
   try {
-    const theposts = posts.find({ author: { $in: list } }).sort({ date: -1 })
+    const theposts = posts.find({ author: { $in: list } }).sort({ date: -1 }).limit(10)
+      .populate({ path: 'author', select: ['name', 'avatar'] })
       .populate({ path: 'likes', select: ['name', 'avatar'] })
       .populate({ path: 'comments.commenter', select: ['name', 'avatar'] })
       .exec(function (err, docs) {
@@ -113,6 +114,9 @@ const newComment = async (req, res) => {
   const post = req.params.post
   const commenter = req.user
   const { content } = req.body
+     if(content.length<1) {
+       return res.status(400).json({message : 'add text to your comment'})
+     }
   try {
     await posts.updateOne({ _id: post }, { $push: { comments: { commenter: commenter.id, content: content } } })
       .populate({ path: 'commenter', select: ['name', 'avatar'] })

@@ -86,8 +86,8 @@ export default function Profile() {
                 history.push(`/user/${userID.id}/feed`)
             }, 1500);
         }
-        catch (err) {
-            console.log(err)
+        catch (error) {
+            console.log(error.response)
         }
     }
 

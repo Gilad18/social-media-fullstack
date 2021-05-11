@@ -41,7 +41,7 @@ export default function Login() {
                     history.push(`/user/${newUser.data.newUser._id}/profile`)
                 }, 1500);
             } catch (error) {
-                console.log(error)
+                setMessage(error.response.data.error.message)
                 setLoading(false)
             }
         } else {

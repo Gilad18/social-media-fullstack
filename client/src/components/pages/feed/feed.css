@@ -92,7 +92,12 @@ textarea::placeholder {
     border-radius: 15px;
     color: white;
 }
-
+ .comments .comment .author {
+     margin-left: 1%;
+ }
+ .comments .comment .text {
+    margin-left: 20%;
+}
 
 @media only screen and (min-width: 900px) {
     .feedPage {

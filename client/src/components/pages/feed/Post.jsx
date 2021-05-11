@@ -2,15 +2,19 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { Button, Header, Image, Comment, Icon } from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
+import FunctioS from '../../utilities/functios'
 import './feed.css'
 
 export default function Post({ post }) {
 
     const token = localStorage.getItem('token')
     const userID = localStorage.getItem('id')
-    const [aPost, setPost] = useState(post)
+    // const [aPost, setPost] = useState(post)
     const [newCommentext, setNewCommentex] = useState('')
     const [moreComments, setMoreComments] = useState(false)
+
+    // console.log(aPost)
+    // console.log(post)
 
     const timePassed = (date) => {
         const now = new Date()
@@ -53,7 +57,7 @@ export default function Post({ post }) {
     const likePost = async () => {
         await axios({
             method: 'put',
-            url: `https://social-media-gilad.herokuapp.com/social/api/${aPost._id}/like`,
+            url: `https://social-media-gilad.herokuapp.com/social/api/${post._id}/like`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -63,7 +67,7 @@ export default function Post({ post }) {
     const comment = async () => {
         await axios({
             method: 'put',
-            url: `https://social-media-gilad.herokuapp.com/social/api/${aPost._id}/comment`,
+            url: `https://social-media-gilad.herokuapp.com/social/api/${post._id}/comment`,
             data: {
                 content: newCommentext
             },
@@ -78,18 +82,19 @@ export default function Post({ post }) {
         setMoreComments(!moreComments)
     }
 
-    const arrayBufferToBase64 = (buffer) => {
-        var binary = '';
-        var bytes = [].slice.call(new Uint8Array(buffer));
-        bytes.forEach((b) => binary += String.fromCharCode(b));
-        return window.btoa(binary);
-    }
+    // const arrayBufferToBase64 = (buffer) => {
+    //     var binary = '';
+    //     var bytes = [].slice.call(new Uint8Array(buffer));
+    //     bytes.forEach((b) => binary += String.fromCharCode(b));
+    //     return window.btoa(binary);
+    // }
+
     return (
         <div className="singlePost">
             <Header as='h4'>
                 {
                     post.author.avatar ?
-                        <img className="ui big circular image" src={`data:image/jpg;base64,${arrayBufferToBase64(post.author.avatar.data)}`}
+                        <img className="ui big circular image" src={`data:image/jpg;base64,${FunctioS(post.author.avatar.data)}`}
                             style={{ maxHeight: '3rem' }} alt="pic" />
                         :
                         <Image circular size='big' alt="pic" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
@@ -105,7 +110,7 @@ export default function Post({ post }) {
             {post.image &&
                 <div className="postImage" >
                     <img style={{ width: '100%', height: '100%' }} alt="pic"
-                        src={`data:image/jpg;base64,${arrayBufferToBase64(post.image.data)}`} />
+                        src={`data:image/jpg;base64,${FunctioS(post.image.data)}`} />
                 </div>
             }
             <Button as='div' color='blue' icon="heart" onClick={likePost}
@@ -117,7 +122,7 @@ export default function Post({ post }) {
                             <Image circular size='big' alt="pic" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
                         </div> */}
                         <textarea onChange={(e) => setNewCommentex(e.target.value)} placeholder="write comment..." />
-                        <button onClick={comment}><Icon name='comment' /></button>
+                        <button onClick={comment}><Icon name='comment' /></button>     /
                     </div>
                 </div>
             </div>
@@ -127,7 +132,13 @@ export default function Post({ post }) {
                         {post.comments.length} Comments</h4>
                     {post.comments.map((item, index) => {
                         return <Comment key={index}>
-                            <Comment.Avatar src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
+                            {
+                                item.commenter.avatar ?
+                                <Comment.Avatar circular src={`data:image/jpg;base64,${FunctioS(item.commenter.avatar.data)}`} />
+                                :
+                                <Comment.Avatar src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
+
+                            }
                             <Comment.Author as='a'>
                                <Link to={`/user/${userID}/friend/${item.commenter._id}`}>{item.commenter.name}</Link>
                                 </Comment.Author>

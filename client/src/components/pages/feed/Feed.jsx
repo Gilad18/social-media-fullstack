@@ -8,15 +8,23 @@ import './feed.css'
 
 export default function Feed() {
 
+    const token = localStorage.getItem('token')
+
     const [postsA , setPostA] = useState([])
     const [postsB , setPostB] = useState([])
 
     useEffect(() => {
         const search = async () => {
-            const allPost = await axios.get(`https://social-media-gilad.herokuapp.com/social/api/posts`)
+            const allPost = await axios({
+                method : 'get',
+                url :`https://social-media-gilad.herokuapp.com/social/api/posts/relevant`,
+                headers : {
+                    'Authorization':`Bearer ${token}`}
+               })
             const posts = allPost.data
             const theSplitIndex = Math.ceil(posts.length/2)
             setPostA(posts.slice(0,theSplitIndex))
+            console.log(postsA)
             setPostB(posts.slice(theSplitIndex,posts.length))
         }
         search()

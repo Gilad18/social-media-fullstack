@@ -24,7 +24,6 @@ export default function Friend() {
                 }
             })
             setFriend(user.data)
-            console.log(friend)
             const post = await axios({
                 method: 'get',
                 url: `https://social-media-gilad.herokuapp.com/social/api/recent/${userID.member}`,
@@ -33,7 +32,6 @@ export default function Friend() {
                 }
             })
             setPost(post.data)
-            console.log('render')
         }
         search()
     }, [token,userID])
