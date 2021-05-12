@@ -14,6 +14,7 @@ export default function Feed() {
     const [postsB, setPostB] = useState([])
     const [postsC, setPostC] = useState([])
     const [postsD, setPostD] = useState([])
+    const [loading , setLoading] = useState(false)
 
     useEffect(() => {
         const search = async () => {
@@ -34,6 +35,7 @@ export default function Feed() {
     },[token])
 
     const morePosts = async () => {
+        setLoading(true)
         const allPost = await axios({
             method: 'get',
             url: `https://social-media-gilad.herokuapp.com/social/api/posts/relevant/10`,
@@ -41,6 +43,7 @@ export default function Feed() {
                 'Authorization': `Bearer ${token}`
             }
         })
+        setLoading(false)
         const posts = allPost.data
         const theSplitIndex = Math.ceil(posts.length / 2)
         setPostC(posts.slice(0, theSplitIndex))
@@ -60,8 +63,8 @@ export default function Feed() {
             <MayKnow />
             {
                 postsB.length === 5 && <React.Fragment>
-                    <Button onClick={morePosts} primary>Load More</Button>
-
+                  <button onClick={morePosts}  className={`ui primary button  ${loading ? 'loading' : ''} `}>
+                  Load More</button>
                     {postsC.length > 0 ?
 
                         <React.Fragment>
@@ -80,7 +83,6 @@ export default function Feed() {
                             <MayKnow/>
                         </React.Fragment>
                     }
-
 
                 </React.Fragment>
             }

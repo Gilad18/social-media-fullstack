@@ -7,7 +7,7 @@ export default function MayKnow() {
 
     const token = localStorage.getItem('token')
     const [people, setPeople] = useState([])
-    const [loading , setLoading] = useState(false)
+    // const [loading , setLoading] = useState(false)
     const [finished , setFinish] = useState(false)
 
 
@@ -27,7 +27,7 @@ export default function MayKnow() {
             }
         })
         setPeople(users.data)
-        if(people.length<1) {
+        if(users.data.length<1) {
             setFinish(true)
         }
        }
@@ -39,7 +39,7 @@ export default function MayKnow() {
 
 
     const followuser = async (id) => {
-        setLoading(true)
+        // setLoading(true)
         await axios({
             method: 'put',
             url: `https://social-media-gilad.herokuapp.com/social/api/${id}/follow`,
@@ -48,11 +48,11 @@ export default function MayKnow() {
             }
         })
         search()
-        setLoading(false)
+        // setLoading(false)
     }
 
     return (
-        <div className="peopleYouMayKnowSec" style={finished ? {display:'none'}: {display:'block'}}>
+        <div className="peopleYouMayKnowSec" style={finished ? {display:'none'}: {display:'inline'}} >
             <div className="ui teal left ribbon label">PeopleYou May Know</div>
             <div className="peopleYouMayKnow">
                 {people.map((item, index) => {
@@ -69,7 +69,7 @@ export default function MayKnow() {
                             <div className="header" style={{ fontSize: '14px' }}>{item.name.split(" ")[0]}</div>
                             <div className="extra content" style={{ marginBottom: '10%' }}><i aria-hidden="true" className="user icon"></i>{item.followers.length}</div>
                             <button  onClick={() => followuser(item._id)}
-                             className={`ui primary button ${ loading ? 'disabled' : ''}`}>Follow</button>
+                             className={`ui primary button`}>Follow</button>
                         </div>
                     </div>
                 })}

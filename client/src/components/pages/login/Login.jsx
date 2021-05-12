@@ -10,7 +10,7 @@ export default function Login() {
 
     const [exist, setExist] = useState(true)
     // const [gender, setGender] = useState(null)
-    const [toggleMessage, setToggleMessage] = useState(`Already have an account? login  `)
+    const [toggleMessage, setToggleMessage] = useState(`Don't have an account? Sign up  `)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
