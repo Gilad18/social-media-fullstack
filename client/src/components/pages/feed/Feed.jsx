@@ -14,7 +14,8 @@ export default function Feed() {
     const [postsB, setPostB] = useState([])
     const [postsC, setPostC] = useState([])
     const [postsD, setPostD] = useState([])
-    const [loading , setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [buttonApper , setAppear] = useState(true)
 
     useEffect(() => {
         const search = async () => {
@@ -32,7 +33,7 @@ export default function Feed() {
             setPostB(posts.slice(theSplitIndex, posts.length))
         }
         search()
-    },[token])
+    }, [token])
 
     const morePosts = async () => {
         setLoading(true)
@@ -47,8 +48,8 @@ export default function Feed() {
         const posts = allPost.data
         const theSplitIndex = Math.ceil(posts.length / 2)
         setPostC(posts.slice(0, theSplitIndex))
-        console.log(postsA)
         setPostD(posts.slice(theSplitIndex, posts.length))
+        setAppear(false)
     }
 
     return (
@@ -63,8 +64,10 @@ export default function Feed() {
             <MayKnow />
             {
                 postsB.length === 5 && <React.Fragment>
-                  <button onClick={morePosts}  className={`ui primary button  ${loading ? 'loading' : ''} `}>
-                  Load More</button>
+                    {
+                      buttonApper &&  <button onClick={morePosts} className={`ui primary button  ${loading ? 'loading' : ''} `}>
+                            Load More</button>
+                    }
                     {postsC.length > 0 ?
 
                         <React.Fragment>
@@ -80,7 +83,7 @@ export default function Feed() {
                         :
                         <React.Fragment>
                             <h4>No more posts from people you follow</h4>
-                            <MayKnow/>
+                            {/* <MayKnow/> */}
                         </React.Fragment>
                     }
 

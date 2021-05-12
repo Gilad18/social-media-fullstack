@@ -1,11 +1,13 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Button, Header, Image, Comment, Icon } from 'semantic-ui-react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import FunctioS from '../../utilities/functios'
 import './feed.css'
 
 export default function Post({ post }) {
+
+    // console.log(post)
 
     const token = localStorage.getItem('token')
     const userID = localStorage.getItem('id')
@@ -56,19 +58,19 @@ export default function Post({ post }) {
     }
 
     const search = async () => {
-       const updatePost =  await axios({
-            method : 'get',
-            url : `https://social-media-gilad.herokuapp.com/social/api/post/${aPost.id}`,
+        const updatePost = await axios({
+            method: 'get',
+            url: `https://social-media-gilad.herokuapp.com/social/api/post/${post._id}`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         })
-        setPost(updatePost)
+        setPost(updatePost.data)
     }
     const likePost = async () => {
         await axios({
             method: 'put',
-            url: `https://social-media-gilad.herokuapp.com/social/api/${aPost._id}/like`,
+            url: `https://social-media-gilad.herokuapp.com/social/api/${post._id}/like`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -79,7 +81,7 @@ export default function Post({ post }) {
     const comment = async () => {
         await axios({
             method: 'put',
-            url: `https://social-media-gilad.herokuapp.com/social/api/${aPost._id}/comment`,
+            url: `https://social-media-gilad.herokuapp.com/social/api/${post._id}/comment`,
             data: {
                 content: newCommentext
             },
@@ -87,6 +89,7 @@ export default function Post({ post }) {
                 'Authorization': `Bearer ${token}`
             }
         })
+        search()
         setNewCommentex('')
     }
 
@@ -125,15 +128,18 @@ export default function Post({ post }) {
                         src={`data:image/jpg;base64,${FunctioS(aPost.image.data)}`} />
                 </div>
             }
-            <Button as='div' color='blue' icon="heart" onClick={likePost}
-                label={{ as: 'a', color: 'blue', pointing: 'left', content: `${aPost.likes.length}` }} />
+            <div className="ui labeled button">
+                <button className={`ui button ${aPost.likes.some((it)=>it._id === userID) ? 'teal' : '' }`}tabindex="0" onClick={likePost}><i aria-hidden="true" className="heart icon"></i> </button>
+                <div className="ui teal left pointing basic label">{aPost.likes.length}</div></div>
+            {/* <Button as='div' color='blue' icon="heart" onClick={likePost}
+                label={{ as: 'a', color: 'blue', pointing: 'left', content: `${aPost.likes.length}` }} /> */}
             <div className="writeComment">
                 <div className="ui comments">
-                    <div className="comment" style={{margin : 'auto'}}>
+                    <div className="comment" style={{ margin: 'auto' }}>
                         {/* <div className="avatar ">
                             <Image circular size='big' alt="pic" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
                         </div> */}
-                        <textarea onChange={(e) => setNewCommentex(e.target.value)} placeholder="write comment..." />
+                        <textarea value={newCommentext} onChange={(e) => setNewCommentex(e.target.value)} placeholder="write comment..." />
                         <button onClick={comment}><Icon name='comment' /></button>     /
                     </div>
                 </div>
@@ -146,14 +152,14 @@ export default function Post({ post }) {
                         return <Comment key={index}>
                             {
                                 item.commenter.avatar ?
-                                <Comment.Avatar circular src={`data:image/jpg;base64,${FunctioS(item.commenter.avatar.data)}`} />
-                                :
-                                <Comment.Avatar src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
+                                    <Comment.Avatar circular src={`data:image/jpg;base64,${FunctioS(item.commenter.avatar.data)}`} />
+                                    :
+                                    <Comment.Avatar src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
 
                             }
                             <Comment.Author as='a'>
-                               <Link to={`/user/${userID}/friend/${item.commenter._id}`}>{item.commenter.name}</Link>
-                                </Comment.Author>
+                                <Link to={`/user/${userID}/friend/${item.commenter._id}`}>{item.commenter.name}</Link>
+                            </Comment.Author>
                             <Comment.Metadata><div>{timePassed(item.onDate)}</div> </Comment.Metadata>
                             <Comment.Text>{item.content}</Comment.Text>
                         </Comment>

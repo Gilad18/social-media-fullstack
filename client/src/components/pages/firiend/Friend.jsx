@@ -59,6 +59,7 @@ export default function Friend() {
 
     return (
         <div className="freindSec">
+            
             {
                  friend !== null &&
                 <React.Fragment>
