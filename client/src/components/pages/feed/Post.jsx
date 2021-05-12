@@ -9,7 +9,7 @@ export default function Post({ post }) {
 
     const token = localStorage.getItem('token')
     const userID = localStorage.getItem('id')
-    // const [aPost, setPost] = useState(post)
+    const [aPost, setPost] = useState(post)
     const [newCommentext, setNewCommentex] = useState('')
     const [moreComments, setMoreComments] = useState(false)
 
@@ -54,20 +54,32 @@ export default function Post({ post }) {
         }
         return `${then.getDate()}-${then.getMonth() + 1}-${then.getFullYear()}`
     }
-    const likePost = async () => {
-        await axios({
-            method: 'put',
-            url: `https://social-media-gilad.herokuapp.com/social/api/${post._id}/like`,
+
+    const search = async () => {
+       const updatePost =  await axios({
+            method : 'get',
+            url : `https://social-media-gilad.herokuapp.com/social/api/post/${aPost.id}`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         })
+        setPost(updatePost)
+    }
+    const likePost = async () => {
+        await axios({
+            method: 'put',
+            url: `https://social-media-gilad.herokuapp.com/social/api/${aPost._id}/like`,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        search()
     }
 
     const comment = async () => {
         await axios({
             method: 'put',
-            url: `https://social-media-gilad.herokuapp.com/social/api/${post._id}/comment`,
+            url: `https://social-media-gilad.herokuapp.com/social/api/${aPost._id}/comment`,
             data: {
                 content: newCommentext
             },
@@ -93,28 +105,28 @@ export default function Post({ post }) {
         <div className="singlePost">
             <Header as='h4'>
                 {
-                    post.author.avatar ?
-                        <img className="ui big circular image" src={`data:image/jpg;base64,${FunctioS(post.author.avatar.data)}`}
+                    aPost.author.avatar ?
+                        <img className="ui big circular image" src={`data:image/jpg;base64,${FunctioS(aPost.author.avatar.data)}`}
                             style={{ maxHeight: '3rem' }} alt="pic" />
                         :
                         <Image circular size='big' alt="pic" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
                 }
                 <Header.Content>
-                    <Link to={`/user/${userID}/friend/${post.author._id}`}>{post.author.name}</Link>
-                    <Header.Subheader>{timePassed(post.date)}</Header.Subheader>
+                    <Link to={`/user/${userID}/friend/${aPost.author._id}`}>{aPost.author.name}</Link>
+                    <Header.Subheader>{timePassed(aPost.date)}</Header.Subheader>
                 </Header.Content>
             </Header>
             <div className="singlePostContent">
                 {post.content}
             </div>
-            {post.image &&
+            {aPost.image &&
                 <div className="postImage" >
                     <img style={{ width: '100%', height: '100%' }} alt="pic"
-                        src={`data:image/jpg;base64,${FunctioS(post.image.data)}`} />
+                        src={`data:image/jpg;base64,${FunctioS(aPost.image.data)}`} />
                 </div>
             }
             <Button as='div' color='blue' icon="heart" onClick={likePost}
-                label={{ as: 'a', color: 'blue', pointing: 'left', content: `${post.likes.length}` }} />
+                label={{ as: 'a', color: 'blue', pointing: 'left', content: `${aPost.likes.length}` }} />
             <div className="writeComment">
                 <div className="ui comments">
                     <div className="comment" style={{margin : 'auto'}}>
@@ -126,11 +138,11 @@ export default function Post({ post }) {
                     </div>
                 </div>
             </div>
-            {post.comments.length > 0 &&
+            {aPost.comments.length > 0 &&
                 <div className="ui comments" style={!moreComments ? { overflow: 'hidden' } : { overflow: 'visible' }}>
                     <h4 className="ui dividing header" onClick={handleMoreComments}>
-                        {post.comments.length} Comments</h4>
-                    {post.comments.map((item, index) => {
+                        {aPost.comments.length} Comments</h4>
+                    {aPost.comments.map((item, index) => {
                         return <Comment key={index}>
                             {
                                 item.commenter.avatar ?

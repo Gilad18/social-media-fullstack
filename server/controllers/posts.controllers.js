@@ -14,14 +14,14 @@ const newPost = async (req, res) => {
 
   try {
     if (req.file) {
-     let picture = await sharp(req.file.buffer).resize(320,240).png().toBuffer()
+      let picture = await sharp(req.file.buffer).resize(320, 240).png().toBuffer()
       newPost.image = picture
     }
     await newPost.save()
     res.status(200).json({ success: "New post was Succesfully created" })
   }
   catch (error) {
-    res.status(400).json({error})
+    res.status(400).json({ error })
   }
 }
 
@@ -44,9 +44,9 @@ const getAllPosts = (req, res) => {
 const getRelevantPosts = async (req, res) => {        //get posts by people ypu follow from sorted from newest to latest
   const list = req.user.following
   list.push(req.user.id)
-  const skip = parseInt(req.params.skip) 
+  const skip = parseInt(req.params.skip)
   try {
-    const theposts = posts.find({ author: { $in: list } }).sort({ date: -1 }).skip(skip).limit(10)
+    posts.find({ author: { $in: list } }).sort({ date: -1 }).skip(skip).limit(10)
       .populate({ path: 'author', select: ['name', 'avatar'] })
       .populate({ path: 'likes', select: ['name', 'avatar'] })
       .populate({ path: 'comments.commenter', select: ['name', 'avatar'] })
@@ -64,15 +64,15 @@ const getRecent = async (req, res) => {
   const id = req.params.friend
   console.log(id)
   try {
-    const post = await posts.findOne({ author: id})
-    .populate({ path: 'likes', select: ['name', 'avatar'] })
-    .populate({ path: 'comments.commenter', select: ['name', 'avatar'] })
-    .exec(function (err, docs) {
-      if (err) return next(err);
-      res.json(docs)
-    })
+    const post = await posts.findOne({ author: id })
+      .populate({ path: 'likes', select: ['name', 'avatar'] })
+      .populate({ path: 'comments.commenter', select: ['name', 'avatar'] })
+      .exec(function (err, docs) {
+        if (err) return next(err);
+        res.json(docs)
+      })
   }
-  catch(err) {
+  catch (err) {
     res.json(err)
   }
 }
@@ -80,8 +80,13 @@ const getRecent = async (req, res) => {
 const getPostByID = async (req, res) => {
   const postid = req.params.id
   try {
-    const post = await posts.findOne({ _id: postid }).populate({ path: 'author', select: ['name', 'avatar'] })
-    res.status(200).json(post)
+    posts.findOne({ _id: postid }).populate({ path: 'author', select: ['name', 'avatar'] })
+      .populate({ path: 'likes', select: ['name', 'avatar'] })
+      .populate({ path: 'comments.commenter', select: ['name', 'avatar'] })
+      .exec(function (err, docs) {
+        if (err) return next(err);
+        res.json(docs)
+      })
   }
   catch (err) {
     res.send(err)
@@ -116,9 +121,9 @@ const newComment = async (req, res) => {
   const post = req.params.post
   const commenter = req.user
   const { content } = req.body
-     if(content.length<1) {
-       return res.status(400).json({message : 'add text to your comment'})
-     }
+  if (content.length < 1) {
+    return res.status(400).json({ message: 'add text to your comment' })
+  }
   try {
     await posts.updateOne({ _id: post }, { $push: { comments: { commenter: commenter.id, content: content } } })
       .populate({ path: 'commenter', select: ['name', 'avatar'] })
