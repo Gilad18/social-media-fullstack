@@ -45,7 +45,6 @@ export default function Friend() {
         setFriend(user.data)
     }
     
-
     const followuser = async (id) => {
         await axios({
             method: 'put',

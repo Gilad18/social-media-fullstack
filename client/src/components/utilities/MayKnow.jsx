@@ -52,7 +52,7 @@ export default function MayKnow() {
     }
 
     return (
-        <div className="peopleYouMayKnowSec" style={finished ? {display:'none'}: {display:'inline'}} >
+        <div className="peopleYouMayKnowSec" style={finished ? {display:'none'}: {display : 'block'}} >
             <div className="ui teal left ribbon label">PeopleYou May Know</div>
             <div className="peopleYouMayKnow">
                 {people.map((item, index) => {

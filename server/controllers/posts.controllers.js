@@ -64,7 +64,8 @@ const getRecent = async (req, res) => {
   const id = req.params.friend
   console.log(id)
   try {
-    const post = await posts.findOne({ author: id })
+      posts.findOne({ author: id })
+      .populate({ path: 'author', select: ['name', 'avatar'] })
       .populate({ path: 'likes', select: ['name', 'avatar'] })
       .populate({ path: 'comments.commenter', select: ['name', 'avatar'] })
       .exec(function (err, docs) {

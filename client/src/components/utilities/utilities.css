@@ -16,6 +16,7 @@
     background-color: #264653;
     padding: 2%;
     margin-bottom: 3%;
+    margin-top: 3%;
 }
 
 .peopleYouMayKnow , .sponseredAd{
@@ -59,6 +60,8 @@
 .sponseredSec {
     background-color: white;
 }
+
+
 
 @media only screen and (min-width: 900px) {
     .peopleYouMayKnowSec , .sponseredSec {

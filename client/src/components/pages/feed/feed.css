@@ -20,64 +20,71 @@
     font-size: medium;
     padding: 1%;
 }
-.writeComment{
-    width: 100%;
-    min-height: 3vh;
-    max-height: 8vh ;
-    margin-top: 2%;
-    padding: 1.5%;
-
-}
 
 .postImage {
     width: 100%;
     height: 30vh;
-    background-color: teal;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
- .singlePost .writeComment .ui .comment {
-     display: flex;
-     justify-content: stretch;
-     align-items: center;
-     text-align: center;
-     height: 5vh;
- }
-
-
-.comment textarea {
-   width : 80vw;
-   height: 100%;
-   background-color: #A9A9A9;
-   border : none ;
-   color: white;
-   border-top-left-radius : 10px;
-   border-bottom-left-radius : 10px;
-   padding: 2%;
-   margin-left: 0;
-}
-textarea::placeholder {
-    color: white;  
+.likeAndShareSec {
+    width:100vw;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    padding-left: 2%;
+    padding-right: 3%;
 }
 
-.comment button {
-    height: 100%;
-    border-top-right-radius : 10px;
-    border-bottom-right-radius : 10px;
-    border: none;
-    width: 12vw;
+.likeAndShareSec .share {
+    color: teal;
     display: flex;
     text-align: center;
     align-items: center;
     justify-content: center;
-    background-color: #2a9d8f;
 }
 
-.comment button i {
-    color: white;
+ .singlePost .writeComment  {
+     display: flex;
+     justify-content: stretch;
+     align-items: center;
+     text-align: center;
+     width: 95vw;
+     height: 5vh;
+     margin: 3% auto;
+ }
+
+
+.writeComment textarea {
+   width : 85%;
+   height: 100%;
+   background-color: #e6e7eb;
+   border : none ;
+   color: rgb(8, 8, 8);
+   border-top-left-radius : 10px;
+   border-bottom-left-radius : 10px;
+   padding: 3%;
 }
+.writeComment textarea::placeholder {
+    color: rgb(8, 8, 8);
+}
+
+.writeComment  button {
+    height: 100%;
+    border-top-right-radius : 10px;
+    border-bottom-right-radius : 10px;
+    border: none;
+    width: 15%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: teal;
+    color: white;
+    }
+
 
 .singlePost .comments {
     margin-top: 0%;

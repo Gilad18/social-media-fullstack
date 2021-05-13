@@ -1,22 +1,17 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Button, Header, Image, Comment, Icon } from 'semantic-ui-react'
+import { Header, Image, Comment, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import FunctioS from '../../utilities/functios'
 import './feed.css'
 
 export default function Post({ post }) {
 
-    // console.log(post)
-
     const token = localStorage.getItem('token')
     const userID = localStorage.getItem('id')
     const [aPost, setPost] = useState(post)
     const [newCommentext, setNewCommentex] = useState('')
     const [moreComments, setMoreComments] = useState(false)
-
-    // console.log(aPost)
-    // console.log(post)
 
     const timePassed = (date) => {
         const now = new Date()
@@ -97,13 +92,6 @@ export default function Post({ post }) {
         setMoreComments(!moreComments)
     }
 
-    // const arrayBufferToBase64 = (buffer) => {
-    //     var binary = '';
-    //     var bytes = [].slice.call(new Uint8Array(buffer));
-    //     bytes.forEach((b) => binary += String.fromCharCode(b));
-    //     return window.btoa(binary);
-    // }
-
     return (
         <div className="singlePost">
             <Header as='h4'>
@@ -128,26 +116,23 @@ export default function Post({ post }) {
                         src={`data:image/jpg;base64,${FunctioS(aPost.image.data)}`} />
                 </div>
             }
+            <div className="likeAndShareSec">
             <div className="ui labeled button">
-                <button className={`ui button ${aPost.likes.some((it)=>it._id === userID) ? 'teal' : '' }`}tabindex="0" onClick={likePost}><i aria-hidden="true" className="heart icon"></i> </button>
-                <div className="ui teal left pointing basic label">{aPost.likes.length}</div></div>
-            {/* <Button as='div' color='blue' icon="heart" onClick={likePost}
-                label={{ as: 'a', color: 'blue', pointing: 'left', content: `${aPost.likes.length}` }} /> */}
+                <button className={`ui button ${aPost.likes.some((it) => it._id === userID) ? 'teal' : ''}`} onClick={likePost}>
+                    <i aria-hidden="true" className="heart icon"></i> </button>
+                <div className="ui teal left pointing basic label">{aPost.likes.length}</div>
+            </div>
+            <button className="ui button share"> <i aria-hidden="true" className="share icon"></i> </button>
+            </div>
             <div className="writeComment">
-                <div className="ui comments">
-                    <div className="comment" style={{ margin: 'auto' }}>
-                        {/* <div className="avatar ">
-                            <Image circular size='big' alt="pic" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
-                        </div> */}
-                        <textarea value={newCommentext} onChange={(e) => setNewCommentex(e.target.value)} placeholder="write comment..." />
-                        <button onClick={comment}><Icon name='comment' /></button>     /
-                    </div>
-                </div>
+                <textarea value={newCommentext} onChange={(e) => setNewCommentex(e.target.value)} placeholder="write a comment..." />
+                <button onClick={comment}><Icon name='comment' /></button>
             </div>
             {aPost.comments.length > 0 &&
                 <div className="ui comments" style={!moreComments ? { overflow: 'hidden' } : { overflow: 'visible' }}>
                     <h4 className="ui dividing header" onClick={handleMoreComments}>
-                        {aPost.comments.length} Comments</h4>
+                        {aPost.comments.length} Comments {aPost.comments.length > 1 &&  <i aria-hidden="true" className="small chevron down icon"></i>}
+                        </h4>
                     {aPost.comments.map((item, index) => {
                         return <Comment key={index}>
                             {

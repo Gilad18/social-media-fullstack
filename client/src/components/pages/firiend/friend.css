@@ -15,6 +15,11 @@
 }
 
 .recentPost {
-    margin-top: 10%;
+    padding: 3%;
     border-bottom: 1px solid black;
+    width: 100vw;
+}
+
+.recentPost .singlePost {
+    margin: 0;
 }

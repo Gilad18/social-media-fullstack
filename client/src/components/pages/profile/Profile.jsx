@@ -6,6 +6,7 @@ import FunctionS from '../../utilities/functios'
 import './profile.css'
 import { Button, Form} from 'semantic-ui-react'
 import MayKnow from '../../utilities/MayKnow'
+import Post from '../feed/Post'
 
 
 export default function Profile() {
@@ -22,9 +23,11 @@ export default function Profile() {
     const [postMedia , setPostMedia] = useState(null)
     const [imageUploadMess, setMessageIMG] = useState('')
     const [loading , setLoading] = useState(false)
+    const [post , setPost] = useState(null)
     
     useEffect(() => {
-        search()
+        search();
+        getPost();
     }, [token , userID])
 
     const search = async () => {
@@ -38,6 +41,19 @@ export default function Profile() {
         console.log(theUser)
         setUser(theUser.data)
     }
+
+    const getPost = async () => {
+        const relevatnt = await axios({
+            method : 'get',
+            url :`https://social-media-gilad.herokuapp.com/social/api/recent/${userID.id}`,
+            headers : {
+                'Authorization':`Bearer ${token}`
+            }
+        })
+        console.log(relevatnt.data)
+        setPost(relevatnt.data)
+    }
+
     const uploadImage = async () => {
         setLoading(true)
         let bodyFormData = new FormData();
@@ -131,7 +147,7 @@ export default function Profile() {
             </div>
             <p style={{ textAlign: 'center', color:'#f4a261', fontWeight: 'bold', fontSize: '14px' }}>{imageUploadMess}</p>
             <div className="profileNewPost">
-                <textarea placeholder="What's on your mind honey? Spill it out..." onChange={(e) => setPostText(e.target.value)} />
+                <textarea placeholder={`What's on your mind, ${user.name.split(" ")[0]}?`} onChange={(e) => setPostText(e.target.value)} />
                 <div className="newPostButtons">
                 <Button onClick={addImageToPost} content='Add Image' secondary />
                 <Button onClick={createNewPost} content='Share Post' primary />
@@ -147,6 +163,9 @@ export default function Profile() {
                     }
             </div>
             <MayKnow/>
+            {
+                post!==null &&  <Post post={post}/>
+            }
         </div>
     )
 }

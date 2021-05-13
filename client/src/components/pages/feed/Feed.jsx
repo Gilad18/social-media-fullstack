@@ -29,7 +29,7 @@ export default function Feed() {
             const posts = allPost.data
             const theSplitIndex = Math.ceil(posts.length / 2)
             setPostA(posts.slice(0, theSplitIndex))
-            console.log(postsA)
+            console.log(allPost.data)
             setPostB(posts.slice(theSplitIndex, posts.length))
         }
         search()
