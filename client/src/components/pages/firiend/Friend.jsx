@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useParams, useHistory } from 'react-router'
 import Post from '../feed/Post'
 import { Button } from 'semantic-ui-react'
+import Search from '../../utilities/Search'
 
 export default function Friend() {
 
@@ -58,6 +59,7 @@ export default function Friend() {
 
     return (
         <div className="freindSec">
+            <Search/>
             
             {
                  friend !== null &&

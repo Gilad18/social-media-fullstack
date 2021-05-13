@@ -61,6 +61,41 @@
     background-color: white;
 }
 
+.searchBoxSec {
+    margin-top: -2%;
+    width: 100vw;
+    min-height: 4vh;
+    background-color: #264653;
+}
+.serachBox {
+    width: 100vw;
+    min-height: 5vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-evenly;
+    border-radius: 15px;
+    background-color: transparent;
+    padding: 1%;
+}
+
+.serachBoxInput {
+    width: 100%;
+    height: 4vh;
+    padding: 1%;
+    border: none;
+    background-color: transparent;
+    margin: auto;
+    color: white;
+    font-size: 16px;
+}
+
+.serachBox input::placeholder {
+    color: white;
+}
+.serachBox i {
+    color: white;
+}
 
 
 @media only screen and (min-width: 900px) {

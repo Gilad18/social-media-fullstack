@@ -42,6 +42,8 @@ usersControllers.loginUser(req,res)
     usersControllers.getFreindByID(req,res)
 }).get('/recent/:friend' ,auth , (req,res) => {    //add auth
     postsControllers.getRecent(req,res)
+}).get('/users/search' , (req,res)=> {
+    usersControllers.searchUser(req,res)
 })
 
 

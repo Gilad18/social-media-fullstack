@@ -2,19 +2,20 @@ const users = require('../models/users.model')
 
 const createNewUser = async (req, res) => {
   const { name, email, password } = req.body
+  const nameFix = name.split(" ").map((item) => item.charAt(0).toUpperCase() + item.slice(1).toLowerCase()).join(' ')
   const newUser = new users({
-    name : name ,
+    name: nameFix,
     email: email,
     password: password,
-    notification : [`Hey ${name.split(' ')[0]}, welcome to social club`]   // see how you add to default in schema
+    notification: [`Hey ${nameFix.split(' ')[0]}, welcome to social club`]   // see how you add to default in schema
   })
   try {
     const token = await newUser.generateToken()
     await newUser.save()
-    res.status(200).json({ success: "New Account was Succesfully created", token , newUser })
+    res.status(200).json({ success: "New Account was Succesfully created", token, newUser })
   }
   catch (error) {
-    res.status(400).json({error})
+    res.status(400).json({ error })
   }
 }
 
@@ -23,7 +24,7 @@ const loginUser = async (req, res) => {
   try {
     const user = await users.findByCredentials(email, password)
     const token = await user.generateToken()
-    res.status(200).json({message : `Welcome Back ${user.name.split(" ")[0]}` , user , token })
+    res.status(200).json({ message: `Welcome Back ${user.name.split(" ")[0]}`, user, token })
   }
   catch (err) {
     res.status(400).json({ error: "Incorrect Inputs" })
@@ -31,16 +32,16 @@ const loginUser = async (req, res) => {
 
 }
 
-const logout = async (req,res) => {
-   const user = req.user
-   try {
-     await user.updateOne({$set :{tokens : []}})
-     user.save()
-     res.status(200).json({success: 'You are now logged out, hope to see you soon'})
-   }
-   catch(err) {
-     res.json(err)
-   }
+const logout = async (req, res) => {
+  const user = req.user
+  try {
+    await user.updateOne({ $set: { tokens: [] } })
+    user.save()
+    res.status(200).json({ success: 'You are now logged out, hope to see you soon' })
+  }
+  catch (err) {
+    res.json(err)
+  }
 }
 
 const getAllUsers = async (req, res) => {
@@ -53,17 +54,17 @@ const getAllUsers = async (req, res) => {
   }
 }
 
-const getFreindByID =  (req,res) => {
+const getFreindByID = (req, res) => {
   const id = req.params.user
   try {
-      users.findOne({ _id: id },{notification:0,email:0,password:0,tokens:0})
-     .populate({ path: 'following', select: ['name', 'avatar'] })
-    .populate({ path: 'followers', select: ['name', 'avatar'] }).exec(function (err, docs) {
-      if (err) return next(err);
-      res.json(docs)
-    })
+    users.findOne({ _id: id }, { notification: 0, email: 0, password: 0, tokens: 0 })
+      .populate({ path: 'following', select: ['name', 'avatar'] })
+      .populate({ path: 'followers', select: ['name', 'avatar'] }).exec(function (err, docs) {
+        if (err) return next(err);
+        res.json(docs)
+      })
   }
-  catch(err) {
+  catch (err) {
     res.json(err)
   }
 }
@@ -86,47 +87,54 @@ const getUserByID = async (req, res) => {
 const follow = async (req, res) => {                     //is there a nicer way to write it?
   const follower = req.user
   const beingFollow = req.params.id
-  
-    try {
-      const alredayFollowing = await users.findOne({ _id: follower.id }).findOne({ following: { $in: beingFollow } })
-      if (!alredayFollowing) {
-        const followUser = await users.updateOne({ _id: follower.id }, { $push: { following: beingFollow } })
-        const followingUser = await users.updateOne({ _id: beingFollow }, { $push: { followers: follower.id }})
-        const notify = await users.updateOne({ _id: beingFollow }, { $push:  {notification : `${req.user.name} started following you`}})
-        await followUser.save()
-        await followingUser.save()
-        await notify.save()
-        return res.json({ success: 'following success' })
-      } else {
-        const unFollowUser = await users.updateOne({ _id: follower.id }, { $pull: { following: beingFollow } })
-        const unFollowingUser = await users.updateOne({ _id: beingFollow }, { $pull: { followers: follower.id } })
-        await unFollowUser.save()
-        await unFollowingUser.save()
-        return res.json({ success: 'unfollowing success' })
-      }
+
+  try {
+    const alredayFollowing = await users.findOne({ _id: follower.id }).findOne({ following: { $in: beingFollow } })
+    if (!alredayFollowing) {
+      const followUser = await users.updateOne({ _id: follower.id }, { $push: { following: beingFollow } })
+      const followingUser = await users.updateOne({ _id: beingFollow }, { $push: { followers: follower.id } })
+      const notify = await users.updateOne({ _id: beingFollow }, { $push: { notification: `${req.user.name} started following you` } })
+      await followUser.save()
+      await followingUser.save()
+      await notify.save()
+      return res.json({ success: 'following success' })
+    } else {
+      const unFollowUser = await users.updateOne({ _id: follower.id }, { $pull: { following: beingFollow } })
+      const unFollowingUser = await users.updateOne({ _id: beingFollow }, { $pull: { followers: follower.id } })
+      await unFollowUser.save()
+      await unFollowingUser.save()
+      return res.json({ success: 'unfollowing success' })
     }
-    catch (err) {
-      res.send(err)
-    }
+  }
+  catch (err) {
+    res.send(err)
+  }
   // }
   // return res.json({error : 'self-follow?! seriously?'})
 }
 
-const getNotificiation =  (req ,res) => {
+const getNotificiation = (req, res) => {
   const notes = req.user.notification
   return res.json(notes)
 }
 
-const clearNotification = async (req,res) => {
-    await req.user.updateOne({ $set : {'notification': [] }} , {multi:true})
-    return res.status(200).json({msg : 'Clear Notification'})
+const clearNotification = async (req, res) => {
+  await req.user.updateOne({ $set: { 'notification': [] } }, { multi: true })
+  return res.status(200).json({ msg: 'Clear Notification' })
 }
 
-const mayKnow = async (req,res) => {
+const mayKnow = async (req, res) => {
   const list = req.user.following           //exclude the requesting user from the list
   list.push(req.user._id)
-  const notFollowing = await users.find({_id : {$nin :list}},{_id:1,name:1,followers:1,avatar:1}).limit(2)
+  const notFollowing = await users.find({ _id: { $nin: list } }, { _id: 1, name: 1, followers: 1, avatar: 1 }).limit(2)
   res.send(notFollowing)
+}
+
+const searchUser = async (req, res) => {
+  // const key = req.body.key
+  var regex = new RegExp([req.body.key].join(""), "i");
+  const results = await users.find({ name: regex }, { name: 1, followers: 1 })
+  res.status(200).json(results)
 }
 
 
@@ -140,5 +148,6 @@ module.exports = {
   clearNotification,
   getNotificiation,
   mayKnow,
-  getFreindByID
+  getFreindByID,
+  searchUser
 }

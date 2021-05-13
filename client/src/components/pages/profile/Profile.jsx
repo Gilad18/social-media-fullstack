@@ -147,7 +147,7 @@ export default function Profile() {
             </div>
             <p style={{ textAlign: 'center', color:'#f4a261', fontWeight: 'bold', fontSize: '14px' }}>{imageUploadMess}</p>
             <div className="profileNewPost">
-                <textarea placeholder={`What's on your mind, ${user.name.split(" ")[0]}?`} onChange={(e) => setPostText(e.target.value)} />
+                <textarea placeholder={`What's on your mind?`} onChange={(e) => setPostText(e.target.value)} />
                 <div className="newPostButtons">
                 <Button onClick={addImageToPost} content='Add Image' secondary />
                 <Button onClick={createNewPost} content='Share Post' primary />
