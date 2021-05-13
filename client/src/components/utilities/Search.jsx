@@ -1,61 +1,54 @@
 import axios from 'axios'
-import e from 'cors'
-import React, { useState } from 'react'
-import { SearchResults } from 'semantic-ui-react'
-// import { Search, Grid } from 'semantic-ui-react'
+import React, { useState, useEffect } from 'react'
+
 
 export default function SearchBar() {
 
-    const token = localStorage.getItem('token')
-
-    const [char, setChar] = useState('')
+    const [cahrs, setChar] = useState('')
     const [loader, setLoader] = useState(false)
     const [results, setResults] = useState([])
 
+
+    // useEffect(() => {
+
+    //     const timeOutId = setTimeout(() => {
+    //         if (char.length > 0) {
+    //             getResults()
+    //         }
+    //     }, 1200);
+    //     return () => {
+    //         clearTimeout(timeOutId)
+    //     }
+    // }, [char])
+
     const getResults = async () => {
         setLoader(true)
-        console.log(char)
-        const theResults = await axios({
-            method : 'get',
-            url : 'http://localhost:4500/social/api/users/search',
-            data : {
-                key : char
-            },
-            headers : {
-                'Authorization':`Bearer ${token}`
-            }
-        })
-        console.log(theResults.response)
-        setLoader(false)
+        console.log(cahrs)
+        const theResults = await axios.get('http://localhost:4500/social/api/users/search',
+            {
+                keyS: cahrs
+
+            })
         setResults(theResults.data)
+        console.log(theResults.data)
+        setLoader(false)
     }
 
-    var timerID;
 
-   const handleType = (event) => {
-       clearTimeout(timerID)
-       setChar(event.target.value)
-       console.log(event.target.value)
-       if(event.target.value.length > 0) {
-        timerID = setTimeout(() => {
-            getResults()
-       }, 1200);
-       }
-   }
 
     return (
         <div className="searchBoxSec">
-        <div className="serachBox">
-           <input className="serachBoxInput" placeholder="Search..."
-           type="text"  onChange={handleType}/>
-           <i className={`large search icon ${loader ? 'loading' : ''}`}></i>
-        </div>
-           {
-               results.length > 0 && <React.Fragment>
+            <div className="serachBox">
+                <input className="serachBoxInput" placeholder="Search..."
+                    type="text" onChange={(e) => setChar(e.target.value)} />
+                <i onClick={getResults} className={`large search icon ${loader ? 'loading' : ''}`}></i>
+            </div>
+            {
+                results.length > 0 && <React.Fragment>
 
-                   
-               </React.Fragment>
-           }
+
+                </React.Fragment>
+            }
         </div>
     )
 }
