@@ -17,7 +17,6 @@ export default function Header() {
     const token = localStorage.getItem('token')
 
     const search = async () => {
-        console.log('header getting notification')
         const getNotes = await axios({
             method: 'get',
             url: 'https://social-media-gilad.herokuapp.com/social/api/getnotes',
@@ -72,7 +71,6 @@ export default function Header() {
             {/* <i className='big  log out icon' onClick={handlePop}></i> */}
             <i className={`big  alarm icon ${notification.length > 0 ? 'red' : 'black'}`} onClick={handlePop}></i>
             {popup && <Notification notes={notification} />}
-
             <Modal
                 basic
                 onClose={() => setOpen(false)}
@@ -97,15 +95,8 @@ export default function Header() {
                         <h3>Can't wait to see you soon :)</h3>
                     </Modal.Content>
                 }
-
             </Modal>
-
-
-
-
         </div>
-
-
     )
 }
 

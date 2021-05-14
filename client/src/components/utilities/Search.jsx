@@ -1,36 +1,31 @@
 import axios from 'axios'
-import React, { useState, useEffect } from 'react'
+import React, { useState} from 'react'
+import { Link } from 'react-router-dom'
 
 
 export default function SearchBar() {
 
+    const userID = localStorage.getItem('id')
     const [cahrs, setChar] = useState('')
     const [loader, setLoader] = useState(false)
     const [results, setResults] = useState([])
 
 
-    // useEffect(() => {
-
-    //     const timeOutId = setTimeout(() => {
-    //         if (char.length > 0) {
-    //             getResults()
-    //         }
-    //     }, 1200);
-    //     return () => {
-    //         clearTimeout(timeOutId)
-    //     }
-    // }, [char])
-
     const getResults = async () => {
         setLoader(true)
         console.log(cahrs)
-        const theResults = await axios.get('http://localhost:4500/social/api/users/search',
-            {
-                keyS: cahrs
-
-            })
+        let bodyFormData = new FormData();
+        bodyFormData.append('keyS', cahrs);
+        const theResults = await axios({
+            method: 'get',
+            url: 'https://social-media-gilad.herokuapp.com/social/api/users/search',
+            bodyFormData,
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
         setResults(theResults.data)
-        console.log(theResults.data)
+        console.log(theResults)
         setLoader(false)
     }
 
@@ -44,10 +39,23 @@ export default function SearchBar() {
                 <i onClick={getResults} className={`large search icon ${loader ? 'loading' : ''}`}></i>
             </div>
             {
-                results.length > 0 && <React.Fragment>
-
-
-                </React.Fragment>
+                (results.length > 0 && cahrs.length > 0) && <div className="searchResultsUI">
+                    <div className="ui feed">
+                        {
+                            results.filter((item) => {
+                                return item.name.toLowerCase().includes(cahrs.toLowerCase())
+                            })
+                                .map((item, index) => {
+                                    return <React.Fragment key={index}>
+                                        <div className="event">
+                                            <div className="label">
+                                                <img alt="user" src="https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg" /></div>
+                                            <Link to={`/user/${userID}/friend/${item._id}`}> <div className="content">{item.name}</div></Link>
+                                        </div>
+                                    </React.Fragment>
+                                })}
+                    </div>
+                </div>
             }
         </div>
     )

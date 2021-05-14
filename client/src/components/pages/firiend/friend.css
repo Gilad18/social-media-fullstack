@@ -23,3 +23,7 @@
 .recentPost .singlePost {
     margin: 0;
 }
+
+.freindSec .recentPost {
+    padding: 0;
+}

@@ -137,7 +137,7 @@ export default function Post({ post }) {
                         return <Comment key={index}>
                             {
                                 item.commenter.avatar ?
-                                    <Comment.Avatar circular src={`data:image/jpg;base64,${FunctioS(item.commenter.avatar.data)}`} />
+                                    <Comment.Avatar  src={`data:image/jpg;base64,${FunctioS(item.commenter.avatar.data)}`} />
                                     :
                                     <Comment.Avatar src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
 

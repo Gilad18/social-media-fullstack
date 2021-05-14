@@ -37,7 +37,7 @@ export default function Sponsered() {
                                 <h4>{ad[random].price} ILS</h4>
                             </div>
                             <a href='https://final-project-appleseeds.herokuapp.com' 
-                            rel="noopener noreferrer"target="_blank">Shop Now</a>
+                            rel="noopener noreferrer" target="_blank">Shop Now</a>
                         </div>
                     </div>
                 </div>
