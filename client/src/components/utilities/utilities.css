@@ -7,7 +7,6 @@
     top: 4.5rem;
     z-index: 10;
     padding: 1%;
-    border-bottom: 2px solid black;
 }
 
 .peopleYouMayKnowSec , .sponseredSec {
@@ -62,11 +61,14 @@
 }
 
 .searchBoxSec {
-    margin-top: -2%;
     width: 100vw;
-    min-height: 4vh;
+    min-height: 7vh;
     background-color: #264653;
-}
+    color: white;
+    position: fixed;
+    top: 4.5rem;
+    z-index: 10;
+   }
 .serachBox {
     width: 100vw;
     min-height: 5vh;

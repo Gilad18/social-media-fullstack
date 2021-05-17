@@ -59,11 +59,6 @@ export default function Friend() {
 
     return (
         <div className="freindSec">
-            <Search/>
-            
-            {
-                 friend !== null &&
-                <React.Fragment>
                     <div className="profileBio">
                         <div className="profileBioImage">
                             {friend.avatar ?
@@ -89,9 +84,6 @@ export default function Friend() {
                          post !== null &&   <Post post={post} />
                     }
                     </div>
-                  
-                </React.Fragment>
-            }
-        </div>
+                  </div>
     )
 }

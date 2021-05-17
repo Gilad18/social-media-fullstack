@@ -133,7 +133,7 @@ const mayKnow = async (req, res) => {
 const searchUser = async (req, res) => {
   const val1 = req.body.keyS
   var regex = new RegExp([val1].join(""), "i");
-  const results = await users.find({ name: regex }, { name: 1, followers: 1 })
+  const results = await users.find({ name: regex }, { name: 1, avatar: 1 })
   res.status(200).json(results)
 }
 

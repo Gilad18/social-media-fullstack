@@ -4,6 +4,7 @@ import { useParams, useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
 import { Icon, Modal, Button } from 'semantic-ui-react'
 import Notification from '../../utilities/Notification'
+import Search from '../../utilities/Search'
 import './header.css'
 
 export default function Header() {
@@ -11,6 +12,7 @@ export default function Header() {
     const history = useHistory()
     const [popup, setPopUp] = useState(false)
     const [notification, setNotification] = useState([])
+    const [searchPop , setSearchPop] = useState(false)
     const [open, setOpen] = useState(false)
     const [seeYou , setSeeYou] = useState(false) 
 
@@ -47,6 +49,10 @@ export default function Header() {
         setPopUp(!popup)
     }
 
+    const handlePopSearch = () => {
+        setSearchPop(!searchPop)
+    }
+
     const handleLogout = async () => {
         await axios({
             method: 'put',
@@ -67,7 +73,10 @@ export default function Header() {
         <div className="headerPage">
             <Link to={`/user/${id.id}/profile`}><Icon size='big' name='user' /></Link>
             <Link to={`/user/${id.id}/feed`}><Icon size='big' name='newspaper' /></Link>
-            <Link to={`/user/${id.id}/friend/1`}><Icon size='big' name='users' /></Link>
+            {/* <Link to={`/user/${id.id}/friend/1`}><Icon size='big' name='users' /></Link> */}
+            <i onClick={handlePopSearch} className="big search icon"></i> {
+                searchPop && <Search/>
+            }
             <div style={{display:'flex'}}>
             { notification.length > 0 && <p style={{color:'red'}}>{notification.length}</p>}
             <i className={`big  alarm icon ${notification.length > 0 ? 'red' : 'black'}`} onClick={handlePop}></i>
