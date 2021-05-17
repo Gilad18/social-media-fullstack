@@ -49,11 +49,11 @@ export default function SearchBar() {
                                 .map((item, index) => {
                                     return <React.Fragment key={index}>
                                         <div className="event">
-                                            <div className="label">
+                                            <div className="label" style={{marginRight:'2%'}}>
                                                 {/* <img alt="user" src="https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg" /> */}
                                                 {
                                                     item.avatar ?
-                                                        <img className="ui  circular image" src={`data:image/jpg;base64,${FunctionS(item.author.avatar.data)}`}
+                                                        <img className="ui  circular image" src={`data:image/jpg;base64,${FunctionS(item.avatar.data)}`}
                                                             style={{ maxHeight: '3rem' }} alt="pic" />
                                                         :
                                                         <img className="ui  circular image" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />

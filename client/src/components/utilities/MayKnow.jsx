@@ -43,7 +43,7 @@ export default function MayKnow() {
 
     return (
         <div className="peopleYouMayKnowSec" style={finished ? {display:'none'}: {display : 'block'}} >
-            <div className="ui teal left ribbon label">PeopleYou May Know</div>
+            <div className="ui teal left ribbon label">People You May Know</div>
             <div className="peopleYouMayKnow">
                 {people.map((item, index) => {
                     return <div key={index} className="ui card" style={{ maxWidth: '35%', padding: '1%', margin: '0' }}>

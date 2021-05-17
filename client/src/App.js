@@ -21,7 +21,6 @@ function App() {
         <Route path="/user/:id/feed" exact component={Feed}/>
         <Route path="/user/:id/profile" exact component={Profile}/>
         <Route path="/user/:id/friend/:member" exact component={Friend}/>
-        {/* <Route path="/user/:id/explore" exact component={Explore}/> */}
     </div>
     </BrowserRouter>
 

@@ -5,7 +5,6 @@ import axios from 'axios'
 import { useParams, useHistory } from 'react-router'
 import Post from '../feed/Post'
 import { Button } from 'semantic-ui-react'
-import Search from '../../utilities/Search'
 
 export default function Friend() {
 
@@ -44,6 +43,7 @@ export default function Friend() {
             }
         })
         setFriend(user.data)
+        console.log(user.data)
     }
     
     const followuser = async (id) => {
@@ -59,6 +59,7 @@ export default function Friend() {
 
     return (
         <div className="freindSec">
+                 {friend!==null && <React.Fragment>
                     <div className="profileBio">
                         <div className="profileBioImage">
                             {friend.avatar ?
@@ -78,12 +79,21 @@ export default function Friend() {
                     <Button onClick={()=>followuser(userID.member)} primary> {
                     friend.followers.some((it) => it._id === userID.id) ? 'Unfollow' : 'Follow'
                     }</Button>
+                    <div className="followersBOX">
+                    <div className="ui blue left ribbon label" style={{margin:'2%'}}>
+                        {`Some of ${friend.name.split(" ")[0]}'s followers:`}
+                         
+                        </div>
+                    </div>
                     <div className="recentPost">
-                    <h4 style={{borderBottom:'1px solid black'}}>Recent Post :</h4>
                     {
-                         post !== null &&   <Post post={post} />
+                         post !== null &&  <React.Fragment>
+                             <div className="ui teal left ribbon label" style={{margin:'2%'}}>Recent Post:</div>
+                             <Post post={post} />
+                              </React.Fragment> 
                     }
                     </div>
+                    </React.Fragment>}
                   </div>
     )
 }

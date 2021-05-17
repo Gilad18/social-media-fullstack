@@ -165,7 +165,10 @@ export default function Profile() {
             </div>
             <MayKnow/>
             {
-                post!==null &&  <Post post={post}/>
+                post!==null &&  <React.Fragment>
+                            <div className="ui blue left ribbon label" style={{margin:'1%'}}>Recent Post:</div>
+                            <Post post={post}/>
+                </React.Fragment> 
             }
         </div>
     )

@@ -14,6 +14,13 @@
     display: flex;
 }
 
+.followersBOX {
+    width: 100vw;
+    height: 25vh;
+    background-color: cadetblue;
+    margin: 4% 0 4% 0;
+}
+
 .recentPost {
     padding: 3%;
     border-bottom: 1px solid black;
