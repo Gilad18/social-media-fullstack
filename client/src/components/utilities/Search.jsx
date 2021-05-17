@@ -1,6 +1,7 @@
 import axios from 'axios'
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import FunctionS from '../utilities/functios'
 
 
 export default function SearchBar() {
@@ -49,7 +50,16 @@ export default function SearchBar() {
                                     return <React.Fragment key={index}>
                                         <div className="event">
                                             <div className="label">
-                                                <img alt="user" src="https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg" /></div>
+                                                {/* <img alt="user" src="https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg" /> */}
+                                                {
+                                                    item.avatar ?
+                                                        <img className="ui  circular image" src={`data:image/jpg;base64,${FunctionS(item.author.avatar.data)}`}
+                                                            style={{ maxHeight: '3rem' }} alt="pic" />
+                                                        :
+                                                        <img className="ui  circular image" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
+                                                }
+
+                                            </div>
                                             <Link to={`/user/${userID}/friend/${item._id}`}> <div className="content">{item.name}</div></Link>
                                         </div>
                                     </React.Fragment>

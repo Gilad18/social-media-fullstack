@@ -67,9 +67,13 @@ export default function Header() {
         <div className="headerPage">
             <Link to={`/user/${id.id}/profile`}><Icon size='big' name='user' /></Link>
             <Link to={`/user/${id.id}/feed`}><Icon size='big' name='newspaper' /></Link>
-            <Link to={`/user/${id.id}/friend/`}><Icon size='big' name='users' /></Link>
-            {/* <i className='big  log out icon' onClick={handlePop}></i> */}
+            <Link to={`/user/${id.id}/friend/1`}><Icon size='big' name='users' /></Link>
+            <div style={{display:'flex'}}>
+            { notification.length > 0 && <p style={{color:'red'}}>{notification.length}</p>}
             <i className={`big  alarm icon ${notification.length > 0 ? 'red' : 'black'}`} onClick={handlePop}></i>
+            </div>
+            
+            
             {popup && <Notification notes={notification} />}
             <Modal
                 basic

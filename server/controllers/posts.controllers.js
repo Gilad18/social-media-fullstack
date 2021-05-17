@@ -129,7 +129,7 @@ const newComment = async (req, res) => {
     await posts.updateOne({ _id: post }, { $push: { comments: { commenter: commenter.id, content: content } } })
       .populate({ path: 'commenter', select: ['name', 'avatar'] })
     const postOwner = await posts.findOne({ _id: post })
-    const notify = await users.findOneAndUpdate({ _id: postOwner.author }, { $push: { notification: `${commenter.name} has commemted your post ` } })
+    const notify = await users.findOneAndUpdate({ _id: postOwner.author }, { $push: { notification: `${commenter.name} has commented your post ` } })
     await notify.save()
     return res.status(200).json({ success: `new comment` })
   }

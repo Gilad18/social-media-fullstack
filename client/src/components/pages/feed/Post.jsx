@@ -12,6 +12,7 @@ export default function Post({ post }) {
     const [aPost, setPost] = useState(post)
     const [newCommentext, setNewCommentex] = useState('')
     const [moreComments, setMoreComments] = useState(false)
+    const [loading , setLoading] = useState(false)
 
     const timePassed = (date) => {
         const now = new Date()
@@ -63,6 +64,7 @@ export default function Post({ post }) {
         setPost(updatePost.data)
     }
     const likePost = async () => {
+        setLoading(true)
         await axios({
             method: 'put',
             url: `https://social-media-gilad.herokuapp.com/social/api/${post._id}/like`,
@@ -71,6 +73,7 @@ export default function Post({ post }) {
             }
         })
         search()
+        setLoading(false)
     }
 
     const comment = async () => {
@@ -119,7 +122,7 @@ export default function Post({ post }) {
             <div className="likeAndShareSec">
             <div className="ui labeled button">
                 <button className={`ui button ${aPost.likes.some((it) => it._id === userID) ? 'teal' : ''}`} onClick={likePost}>
-                    <i aria-hidden="true" className="heart icon"></i> </button>
+                    <i aria-hidden="true" className={`heart icon ${ loading ? 'loading' : '' }`}></i> </button>
                 <div className="ui teal left pointing basic label">{aPost.likes.length}</div>
             </div>
             {/* <button className="ui button share"> <i aria-hidden="true" className="share icon"></i> </button> */}

@@ -3,6 +3,21 @@ import './utilities.css'
 
 export default function Notification({ notes }) {
 
+    const getIcon = (item) => {
+        if(item.includes('liked')) {
+            return 'blue like'
+        }
+        if(item.includes('commented')) {
+            return 'teal comment'
+        }
+        if(item.includes('following')) {
+            return 'green user plus'
+        }
+        if(item.includes('welcome')) {
+            return 'orange users'
+        }
+    }
+
 
     return (
         <div className="notificationSec">
@@ -11,7 +26,10 @@ export default function Notification({ notes }) {
                     return <React.Fragment key={index}>
                         <div className="event">
                             <div className="label">
-                                <img  alt="user" src="https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg" /></div>
+                                {
+                                
+                                }
+                                <i className={`${getIcon(item)} icon`}></i></div>
                             <div className="content">{item}</div>
                         </div>
                         </React.Fragment>
