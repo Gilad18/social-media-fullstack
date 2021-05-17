@@ -88,7 +88,7 @@
 
 .singlePost .comments {
     margin-top: 0%;
-    height: 10vh;
+    height: 11vh;
 }
 
 .adInfo a {
@@ -117,5 +117,11 @@
     }
     .feedPage{
         background-color: white;
+    }
+    .singlePost .writeComment {
+      width: 90%;
+    }
+    .singlePost .comments {
+        height: 10vh;
     }
   }

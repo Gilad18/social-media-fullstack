@@ -122,7 +122,7 @@ export default function Post({ post }) {
                     <i aria-hidden="true" className="heart icon"></i> </button>
                 <div className="ui teal left pointing basic label">{aPost.likes.length}</div>
             </div>
-            <button className="ui button share"> <i aria-hidden="true" className="share icon"></i> </button>
+            {/* <button className="ui button share"> <i aria-hidden="true" className="share icon"></i> </button> */}
             </div>
             <div className="writeComment">
                 <textarea value={newCommentext} onChange={(e) => setNewCommentex(e.target.value)} placeholder="write a comment..." />

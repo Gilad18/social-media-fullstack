@@ -82,7 +82,7 @@ export default function Feed() {
                         </React.Fragment>
                         :
                         <React.Fragment>
-                            <h4>No more posts from people you follow</h4>
+                            {/* <h4>No more posts from people you follow</h4> */}
                             {/* <MayKnow/> */}
                         </React.Fragment>
                     }
