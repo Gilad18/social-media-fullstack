@@ -39,8 +39,11 @@ export default function Profile() {
                 'Authorization':`Bearer ${token}`
             }
         })
-        console.log(theUser)
         setUser(theUser.data)
+        const followers = theUser.data.followers
+        let followersID = []
+        followers.forEach((it)=>followersID.push(it._id))
+        localStorage.setItem('followers', followersID)
     }
 
     const getPost = async () => {

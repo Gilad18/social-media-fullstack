@@ -14,6 +14,7 @@ export default function Post({ post }) {
     const [moreComments, setMoreComments] = useState(false)
     const [loading , setLoading] = useState(false)
 
+
     const timePassed = (date) => {
         const now = new Date()
         const then = new Date(date)
@@ -99,7 +100,7 @@ export default function Post({ post }) {
         <div className="singlePost">
             <Header as='h4'>
                 {
-                    aPost.author.avatar ?
+                    aPost.author.avatar!==null ?
                         <img className="ui big circular image" src={`data:image/jpg;base64,${FunctioS(aPost.author.avatar.data)}`}
                             style={{ maxHeight: '3rem' }} alt="pic" />
                         :

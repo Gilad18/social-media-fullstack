@@ -3,7 +3,7 @@ import axios from 'axios'
 import Post from './Post'
 import MayKnow from '../../utilities/MayKnow'
 import Sponser from '../../utilities/Sponsered'
-import { Button } from 'semantic-ui-react'
+import Loader from '../../utilities/loader/Loader'
 import './feed.css'
 
 export default function Feed() {
@@ -16,9 +16,11 @@ export default function Feed() {
     const [postsD, setPostD] = useState([])
     const [loading, setLoading] = useState(false)
     const [buttonApper , setAppear] = useState(true)
+    const [loader , setLoader] = useState(false)
 
     useEffect(() => {
         const search = async () => {
+            setLoader(true)
             const allPost = await axios({
                 method: 'get',
                 url: `https://social-media-gilad.herokuapp.com/social/api/posts/relevant/0`,
@@ -31,6 +33,7 @@ export default function Feed() {
             setPostA(posts.slice(0, theSplitIndex))
             console.log(allPost.data)
             setPostB(posts.slice(theSplitIndex, posts.length))
+            setLoader(false)
         }
         search()
     }, [token])
@@ -54,6 +57,9 @@ export default function Feed() {
 
     return (
         <div className="feedPage">
+            {
+                loader && <Loader/>
+            }
             {postsA.map((item, index) => {
                 return <Post post={item} key={index} />
             })}

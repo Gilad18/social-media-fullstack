@@ -16,9 +16,15 @@
 
 .followersBOX {
     width: 100vw;
-    height: 25vh;
+    height: 20vh;
     background-color: cadetblue;
     margin: 4% 0 4% 0;
+    display: grid;
+    grid-template-columns : repeat(auto-fill, minmax(20vw , 1fr));
+    grid-gap : 5%;
+    padding: 5%;
+    overflow: hidden;
+
 }
 
 .recentPost {

@@ -5,12 +5,14 @@ import axios from 'axios'
 import { useParams, useHistory } from 'react-router'
 import Post from '../feed/Post'
 import { Button } from 'semantic-ui-react'
+import Mutual from '../../utilities/Mutual'
 
 export default function Friend() {
 
     const token = localStorage.getItem('token')
     const userID = useParams()
     const history = useHistory()
+    const myFollowers = localStorage.getItem('followers')
 
 
     if(userID.id === userID.member) {
@@ -79,16 +81,24 @@ export default function Friend() {
                     <Button onClick={()=>followuser(userID.member)} primary> {
                     friend.followers.some((it) => it._id === userID.id) ? 'Unfollow' : 'Follow'
                     }</Button>
-                    <div className="followersBOX">
-                    <div className="ui blue left ribbon label" style={{margin:'2%'}}>
-                        {`Some of ${friend.name.split(" ")[0]}'s followers:`}
-                         
-                        </div>
-                    </div>
+                    <div style={{backgroundColor:'cadetblue' , margin:'3%'}}>
+                    <div className="ui yellow left ribbon label" style={{margin:'2%'}} >Mutual Followers:</div>
+                   
+                    <div className="followersBOX">             
+                       {
+                           friend.followers.filter((it) => {
+                               return myFollowers.includes(it._id)
+                           })
+                           .map((item,index) => {
+                               return <Mutual key={index} name={item.name} pic={item.avatar}/>
+                           })
+                       }
+
+                    </div> </div>
                     <div className="recentPost">
                     {
                          post !== null &&  <React.Fragment>
-                             <div className="ui teal left ribbon label" style={{margin:'2%'}}>Recent Post:</div>
+                             <div className="ui teal left ribbon label" style={{margin:'2%'}}>Recently posted:</div>
                              <Post post={post} />
                               </React.Fragment> 
                     }
