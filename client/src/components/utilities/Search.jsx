@@ -50,7 +50,6 @@ export default function SearchBar() {
                                     return <React.Fragment key={index}>
                                         <div className="event">
                                             <div className="label" style={{marginRight:'2%'}}>
-                                                {/* <img alt="user" src="https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg" /> */}
                                                 {
                                                     item.avatar ?
                                                         <img className="ui  circular image" src={`data:image/jpg;base64,${FunctionS(item.avatar.data)}`}
