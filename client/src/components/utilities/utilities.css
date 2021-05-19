@@ -7,6 +7,8 @@
     top: 4.5rem;
     z-index: 10;
     padding: 1%;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 .peopleYouMayKnowSec , .sponseredSec {
@@ -124,5 +126,9 @@
         margin-top: 1.5%;
         border-radius: 15px;
 
+    }
+    .notificationSec {
+        width: 30vw;
+        right: 17vw;
     }
   }

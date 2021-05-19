@@ -43,7 +43,16 @@
 
 @media only screen and (min-width: 900px) {
     .freindSec {
+        width: 90vw;
+        margin: auto;
+    }
+    .freindSec .profileBio {
+        width: 50%;
+    }
+    .followersBOX {
         width: 50vw;
+    }
+    .recentPost {
         margin: auto;
     }
 }
