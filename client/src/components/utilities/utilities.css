@@ -64,12 +64,14 @@
 
 .searchBoxSec {
     width: 100vw;
-    min-height: 7vh;
+    min-height: 6vh;
     background-color: #264653;
     color: white;
     position: fixed;
     top: 4.5rem;
     z-index: 10;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
    }
 .serachBox {
     width: 100vw;

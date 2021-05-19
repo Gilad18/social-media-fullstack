@@ -53,9 +53,9 @@ export default function SearchBar() {
                                                 {
                                                     item.avatar ?
                                                         <img className="ui  circular image" src={`data:image/jpg;base64,${FunctionS(item.avatar.data)}`}
-                                                            style={{ maxHeight: '3rem' }} alt="pic" />
+                                                            style={{ maxHeight: '3rem' }} alt="user" />
                                                         :
-                                                        <img className="ui  circular image" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
+                                                        <img className="ui  circular image" alt="user" src='https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg' />
                                                 }
 
                                             </div>
