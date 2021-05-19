@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import FunctionS from '../utilities/functios'
 
 
@@ -10,6 +10,7 @@ export default function SearchBar() {
     const [cahrs, setChar] = useState('')
     const [loader, setLoader] = useState(false)
     const [results, setResults] = useState([])
+    const history = useHistory();
 
 
     const getResults = async () => {
@@ -28,6 +29,10 @@ export default function SearchBar() {
         setResults(theResults.data)
         console.log(theResults)
         setLoader(false)
+    }
+
+    const goToUser = (item) => {
+      history.push(`/user/${userID}/friend/${item}`)
     }
 
 
@@ -59,7 +64,7 @@ export default function SearchBar() {
                                                 }
 
                                             </div>
-                                            <Link to={`/user/${userID}/friend/${item._id}`}> <div className="content">{item.name}</div></Link>
+                                            <div onClick={()=>goToUser(item._id)} className="content">{item.name}</div>
                                         </div>
                                     </React.Fragment>
                                 })}

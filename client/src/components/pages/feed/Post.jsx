@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useState,useRef } from 'react'
 import { Header, Image, Comment, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import FunctioS from '../../utilities/functios'
@@ -13,6 +13,8 @@ export default function Post({ post }) {
     const [newCommentext, setNewCommentex] = useState('')
     const [moreComments, setMoreComments] = useState(false)
     const [loading , setLoading] = useState(false)
+    const [likes , setLikes] = useState(post.likes.length)
+    const likeBtn = useRef()
 
 
     const timePassed = (date) => {
@@ -63,9 +65,18 @@ export default function Post({ post }) {
             }
         })
         setPost(updatePost.data)
+        setLikes(updatePost.data.likes.length)
     }
+
     const likePost = async () => {
-        setLoading(true)
+        if (likeBtn.current.className.includes('teal')) {
+            setLikes(likes-1)
+            likeBtn.current.className = 'ui button'
+        } else {
+             setLikes(likes+1)
+             likeBtn.current.className = 'ui button teal'
+            }
+        
         await axios({
             method: 'put',
             url: `https://social-media-gilad.herokuapp.com/social/api/${post._id}/like`,
@@ -74,10 +85,10 @@ export default function Post({ post }) {
             }
         })
         search()
-        setLoading(false)
     }
 
     const comment = async () => {
+        setLoading(true)
         await axios({
             method: 'put',
             url: `https://social-media-gilad.herokuapp.com/social/api/${post._id}/comment`,
@@ -90,6 +101,7 @@ export default function Post({ post }) {
         })
         search()
         setNewCommentex('')
+        setLoading(false)
     }
 
     const handleMoreComments = () => {
@@ -122,15 +134,14 @@ export default function Post({ post }) {
             }
             <div className="likeAndShareSec">
             <div className="ui labeled button">
-                <button className={`ui button ${aPost.likes.some((it) => it._id === userID) ? 'teal' : ''}`} onClick={likePost}>
-                    <i aria-hidden="true" className={`heart icon ${ loading ? 'loading' : '' }`}></i> </button>
-                <div className="ui teal left pointing basic label">{aPost.likes.length}</div>
+                <button ref={likeBtn} className={`ui button ${aPost.likes.some((it) => it._id === userID) ? 'teal' : ''}`} onClick={likePost}>
+                    <i aria-hidden="true" className={`heart icon`}></i> </button>
+                <div className="ui teal left pointing basic label">{likes}</div>
             </div>
-            {/* <button className="ui button share"> <i aria-hidden="true" className="share icon"></i> </button> */}
             </div>
             <div className="writeComment">
                 <textarea value={newCommentext} onChange={(e) => setNewCommentex(e.target.value)} placeholder="write a comment..." />
-                <button onClick={comment}><Icon name='comment' /></button>
+                <button onClick={comment}><i className={`comment icon ${loading? 'loading' : ''}`}></i></button>
             </div>
             {aPost.comments.length > 0 &&
                 <div className="ui comments" style={!moreComments ? { overflow: 'hidden' } : { overflow: 'visible' }}>
