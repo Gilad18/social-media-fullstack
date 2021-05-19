@@ -90,7 +90,7 @@ export default function Friend() {
                                return myFollowers.includes(it._id)
                            })
                            .map((item,index) => {
-                               return <Mutual key={index} name={item.name} pic={item.avatar}/>
+                               return <Mutual key={index} name={item.name.split(" ")[0]} pic={item.avatar}/>
                            })
                        }
 
