@@ -10,6 +10,10 @@ Appleseed Academy final project to showcase my fullstack development skills usin
 
 ‘Social Club’ is a social media app inspired by Facebook, once a user creates his/her account, they can share posts, follow other users activity, see their posts and interact with them
 
+![scopen](https://user-images.githubusercontent.com/77917272/128184101-a74f4396-a973-4afc-870b-bb9e5fce8a38.jpg)
+
+
+
 ## Project timeline
 * Create the project infrastructure  for both server and client with the needed libraries and deploy to Heroku using Github repository .
 * Building the server and its routes with the help of Express.
@@ -64,4 +68,9 @@ https://social-media-gilad.herokuapp.com
  
 ## Authors
 Gilad Yefet - - PurpleBooth
+
+![socialclub2](https://user-images.githubusercontent.com/77917272/128184193-53982d3d-edde-415a-8abb-b6e2686bfd20.jpg)
+
+![SocialCLub1](https://user-images.githubusercontent.com/77917272/128182841-c6e9fdae-a64c-49c6-8eb4-c1677cb5e619.jpg)
+
 
